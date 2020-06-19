@@ -1,6 +1,6 @@
 'use strict'
-const middleware = {}
+const middleware = {};
 
-middleware.notFind = require('./not-find')
+middleware.notFind = require('./not-find');
 
-module.exports = middleware
+module.exports = middleware;

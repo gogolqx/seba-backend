@@ -17,7 +17,7 @@ require('dotenv/config');
 // Middlewares
 api.use(bodyParser.json());
 api.use(cors());
-api.use(middlewares.middleware);
+//api.use(middlewares.middleware);
 // Basic Routes
 
 api.get('/',(req,res) => {
@@ -29,7 +29,7 @@ api.get('/',(req,res) => {
 api.use('/tours',toursRoute);
 //api.use('/guides',guidesRoute);
 //api.use('/users',usersRoute);
-api.use(middlewares.middleware);
+api.use(middleware);
 
 
 module.exports = api;
