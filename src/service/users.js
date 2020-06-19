@@ -1,8 +1,8 @@
-'use strict'
+/*'use strict'
 class UserService {
   async addUser (data) {
     return 'create success'
   }
 }
 
-module.exports = new UserService()
+module.exports = new UserService() */

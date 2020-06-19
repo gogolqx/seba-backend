@@ -29,7 +29,7 @@ api.get('/',(req,res) => {
 api.use('/tours',toursRoute);
 //api.use('/guides',guidesRoute);
 //api.use('/users',usersRoute);
-api.use(middleware);
+
 
 
 module.exports = api;
