@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const middleware = require('../middlewares');
 const Tour = require('../models/Tour');
 
 router.get('/',async(req,res) => {
     console.log('I am here getting tour');
-    //res.json({user:'tobi'});
+    
     try{
         const tours = await Tour.find();
         res.json(tours);

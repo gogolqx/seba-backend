@@ -9,6 +9,9 @@ const TourSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    duration:{
+        type: Int16Array
+    },
     date:{
         type: Date,
         default: Date.now
