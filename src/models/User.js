@@ -5,14 +5,14 @@ const UserSchema = new mongoose.Schema({
     * Changes from conceptual diagram:
     * I put the first_name, middle_name and last_name in here instead of both guide and traveller.
     */
-    id: {
-        type: Number,
+    username: {
+        type: String,
         unique: true,
         required: true
     },
     guide_id: Number,
     traveller_id: Number,
-    first_name:  {
+   /* first_name:  {
         type: String,
         required: true
     },
@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    */
     email: {
         type: String,
         required: true

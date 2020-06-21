@@ -2,7 +2,7 @@
 
 const jwt    = require('jsonwebtoken');
 
-const config = require ('./config');
+const config = require ('../config');
 
 const allowCrossDomain = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
