@@ -2,8 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const mongoose = require('mongoose');
+const helmet     = require('helmet');
 const cors = require('cors');
 const toursRoute = require('./routes/tours');
 const authRoute = require('./routes/auth');
@@ -16,8 +15,10 @@ require('dotenv/config');
 
 
 // Middlewares
+api.use(helmet());
 api.use(bodyParser.json());
 api.use(cors());
+api.use(bodyParser.urlencoded({ extended: false }));
 api.use(middlewares.allowCrossDomain);
 // Basic Routes
 

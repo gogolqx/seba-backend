@@ -1,13 +1,13 @@
 const Tour = require('../models/Tour');
 
 const create = async(req, res) => {
-    const tour = new Tour({
+    const tour =  new Tour({
         title: req.body.title,
         description: req.body.description,
         city: req.body.city
     });
     
-    tour.save()
+    await tour.save()
         .catch(error => res.status(500).json({
         error: 'Internal server error',
         message: error.message

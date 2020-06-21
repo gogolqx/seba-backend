@@ -22,8 +22,9 @@ const checkAuthentication = (req, res, next) => {
 
     // check header or url parameters or post parameters for token
     let token = ""
+    //console.log(req);
     if(req.headers.authorization) {
-        token = req.headers.authorization.substring(4);
+        token = req.headers.authorization;
     }
 
     if (!token)
@@ -41,6 +42,7 @@ const checkAuthentication = (req, res, next) => {
 
         // if everything is good, save to request for use in other routes
         req.userId = decoded.id;
+        //console.log(decoded.id);
         next();
     });
 
