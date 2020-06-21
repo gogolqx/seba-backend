@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const toursRoute = require('./routes/tours');
+const authRoute = require('./routes/auth');
 //const guidesRoute = require('./routes/guides');
 //const usersRoute = require('./routes/users');
 const middlewares = require('./middlewares/index');
@@ -17,7 +18,7 @@ require('dotenv/config');
 // Middlewares
 api.use(bodyParser.json());
 api.use(cors());
-//api.use(middlewares.middleware);
+api.use(middlewares.allowCrossDomain);
 // Basic Routes
 
 api.get('/',(req,res) => {
@@ -26,6 +27,7 @@ api.get('/',(req,res) => {
 });
 
 // API routes
+api.use('/auth',authRoute)
 api.use('/tours',toursRoute);
 //api.use('/guides',guidesRoute);
 //api.use('/users',usersRoute);
