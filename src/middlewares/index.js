@@ -1,6 +1,6 @@
 'use strict'
 const middleware = {};
 
-middleware.notFind = require('./not-find');
+middleware.notFind = require('./auth');
 
 module.exports = middleware;
