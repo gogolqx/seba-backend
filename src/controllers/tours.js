@@ -1,29 +1,28 @@
 const Tour = require('../models/Tour');
 
-const create = async(req, res) => {
-    const tour =  new Tour({
-        title: req.body.title,
-        description: req.body.description,
-        city: req.body.city
+
+
+const create = (req, res) => {
+    if (Object.keys(req.body).length === 0) return res.status(400).json({
+        error: 'Bad Request',
+        message: 'The request body is empty'
     });
-    
-    await tour.save()
+
+    Tour.create(req.body)
+        .then(tour => res.status(201).json(tour))
         .catch(error => res.status(500).json({
-        error: 'Internal server error',
-        message: error.message
-    }));
-    console.log(tour);
-    res.json(tour);
-        
+            error: 'Internal server error',
+            message: error.message
+        }));
 };
 const update = (req, res) => {
-   /* if (Object.keys(req.body).length === 0)
+    if (Object.keys(req.body).length === 0)
     {
         return res.status(400).json({
             error: 'Bad Request',
             message: 'The request body is empty' 
         });
-    }*/
+    }
 
     Tour.findByIdAndUpdate(req.params.id,req.body,{
         new: true,
