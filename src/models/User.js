@@ -10,9 +10,19 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    guide_id: Number,
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+    
+    /*guide_id: Number,
     traveller_id: Number,
-   /* first_name:  {
+    first_name:  {
         type: String,
         required: true
     },
@@ -21,20 +31,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    */
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
     country: String,
     phone_number: Number,
     country_code: Number,
     card_number: Number,
     address: String
+    */
+   
+    
 });
-
+//UserSchema.plugin(require('mongoose-beautiful-unique-validation'));
 module.exports = mongoose.model('Users', UserSchema);

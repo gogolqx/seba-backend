@@ -45,19 +45,18 @@ const list  = async(req, res) => {
     }
 
 };
-const search= async(req, res) => {
+const search = async(req, res) => {
     var query ={};
   
     if (req.body.city){
         query.city = req.body.city;
     }
-    if (req.body.price){
-        query.city = req.body.city;
-    }
+    
     if (req.body.price_min){
         query.price_min = req.body.price_min;
     }
     else{query.price_min=-1;}
+    
     if (req.body.price_max){
         query.price_max = req.body.price_max;
     }

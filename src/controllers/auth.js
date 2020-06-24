@@ -52,16 +52,20 @@ const register = (req,res) => {
         error: 'Bad Request',
         message: 'The request body must contain a username property'
     });
-
+    if (!Object.prototype.hasOwnProperty.call(req.body, 'email')) return res.status(400).json({
+        error: 'Bad Request',
+        message: 'The request body must contain a email property'
+    });
     const user = Object.assign(req.body, {password: bcrypt.hashSync(req.body.password, 8)});
 
-
+    console.log('creating user');
+    console.log(req.body);
     User.create(user)
         .then(user => {
-
+            
             // if user is registered without errors
             // create a token
-            const token = jwt.sign({ id: user._id, username: user.username }, config.JwtSecret, {
+            const token = jwt.sign({ id: user.username,  username: user.username }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
@@ -70,6 +74,7 @@ const register = (req,res) => {
 
         })
         .catch(error => {
+            
             if(error.code == 11000) {
                 res.status(400).json({
                     error: 'User exists',
@@ -77,6 +82,7 @@ const register = (req,res) => {
                 })
             }
             else{
+                
                 res.status(500).json({
                     error: 'Internal server error',
                     message: error.message
