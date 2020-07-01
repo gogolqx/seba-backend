@@ -13,25 +13,38 @@ const TourSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date:{
-        type: Date,
-        default: Date.now
+    dates:{
+        type: [Date]
     },
     language: String,
-    location: [Number],
+    country:{type:  { code: String, name: String },
+        required: true},
     city:{
         type: String,
         required: true
     },
+    lat:  {type:Number, required: true},
+    lon:  {type:Number, required: true},
     description: {
         type: String,
         required: true
     },
     max_participants: Number,
     price: Number,
-    time: {
-        type: Date,
-        default: Date.now
+    preference: [String],
+    schedules: {
+        type: [{
+            hours: {
+                type: Number, required: true, min: 0, max: 23
+            },
+            minutes: {
+                type: Number, required: true, min: 0, max: 59
+            }
+        }]
+    },
+    duration:{
+        type: Number,
+        required: true
     },
     review_id: [Number],
     rating:{
