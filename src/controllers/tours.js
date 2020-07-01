@@ -9,6 +9,8 @@ var add_schedule =  function (dt, hours,mins) {
 }
 const crg = require('country-reverse-geocoding').country_reverse_geocoding();
 const geoCoder = nodeGeocoder(options);
+// creating tour
+//TODO: auth for guide id
 const create = async (req, res) => {
     if (Object.keys(req.body).length === 0) return res.status(400).json({
         error: 'Bad Request',
@@ -38,6 +40,7 @@ const create = async (req, res) => {
                     new_dates.push(date_time);
                 }
              };
+             // this is the final request
              new_req ={
                 title:req.body.title,
                 dates:dates,
@@ -65,42 +68,16 @@ const create = async (req, res) => {
             message: error.message
         }));
 };
-const update = (req, res) => {
-    if (Object.keys(req.body).length === 0)
-    {
-        return res.status(400).json({
-            error: 'Bad Request',
-            message: 'The request body is empty' 
-        });
-    }
 
-    Tour.findByIdAndUpdate(req.params.id,req.body,{
-        new: true,
-        runValidators: true}).exec()
-        .then(tour => res.status(200).json(tour))
-        .catch(error => res.status(500).json({
-            error: 'Internal server error',
-            message: error.message
-        }));
-};
-
-const list  = async(req, res) => {
-    console.log('I am here getting tour');
-    try{
-        const tours = await Tour.find();
-        res.json(tours);
-    }catch(err){
-        res.json({message:err});
-    }
-
-};
+// searching for tours on conditions
 const search = async(req, res) => {
     var query ={};
-  
+    //city
     if (req.body.city){
         query.city = req.body.city;
     }
-    
+
+    //price
     if (req.body.price_min){
         query.price_min = req.body.price_min;
     }
@@ -110,6 +87,8 @@ const search = async(req, res) => {
         query.price_max = req.body.price_max;
     }
     else{query.price_max = 999999999;}
+
+    //date period
     if(req.body.start_date){
         query.pre =  new Date(req.body.start_date);
     }
@@ -122,8 +101,9 @@ const search = async(req, res) => {
     if(req.body.preference){
         query.preference=req.body.preference;
  }
-
    last_day = add_schedule(query.post,23,59);
+
+   //preference and return a list of tours
    if(req.body.preference){
        query.preference=req.body.preference;
        const tours = await Tour.find({
@@ -146,6 +126,19 @@ const search = async(req, res) => {
 
 
 
+// listing all tours
+//TODO: 
+const list  = async(req, res) => {
+    console.log('I am here getting tour');
+    try{
+        const tours = await Tour.find();
+        res.json(tours);
+    }catch(err){
+        res.json({message:err});
+    }
+
+};
+
 const remove = (req, res) => {
     Tour.findByIdAndRemove(req.params.id).exec()
         .then(() => res.status(200).json({message: `Tour with id${req.params.id} was deleted`}))
@@ -154,7 +147,26 @@ const remove = (req, res) => {
             message: error.message
         }));
 };
+// updating tour
+//TODO: 
+const update = (req, res) => {
+    if (Object.keys(req.body).length === 0)
+    {
+        return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body is empty' 
+        });
+    }
 
+    Tour.findByIdAndUpdate(req.params.id,req.body,{
+        new: true,
+        runValidators: true}).exec()
+        .then(tour => res.status(200).json(tour))
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+};
 module.exports = {
     create,
     search,
