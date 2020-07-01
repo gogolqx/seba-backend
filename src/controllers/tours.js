@@ -116,26 +116,40 @@ const search = async(req, res) => {
     else{query.price_max = 999999999;}
     if(req.body.start_date){
         query.pre =  new Date(req.body.start_date);
+    }
+    else{query.pre =new Date( "2010-01-01");}
+    if(req.body.end_date){
+        query.post =  new Date(req.body.end_date)
+    }
+    else{query.post =new Date ("2099-01-01");}
+    
+    if(req.body.preference){
+        query.preference=req.body.preference;
  }
- if(req.body.end_date){
-    query.post =  new Date(req.body.end_date);
- }
- 
 //diff_days=(query.post-query.pre)/86400000;
 //period=[];
 //res = [];
 //for (i = 0; i <= diff_days; i++) { 
    // period.push(add_schedule(query.pre,i*24,0));
    last_day =add_schedule(query.post,23,59);
-  
-    const tours = await Tour.find({
-                        city:query.city,
-                        //price:{$gte: query.price_min,  $lte: query.price_max},
-                        //dates:{$gt: query.start_date}
-                        dates:{$gte: query.pre,$lte:last_day } 
-                    }).exec();
-    res.json(tours);
-//}
+   if(req.body.preference){
+       query.preference=req.body.preference;
+       const tours = await Tour.find({
+           city:query.city,
+           price:{$gte: query.price_min,  $lte: query.price_max},
+           dates:{$gte: query.pre,$lte:last_day} ,
+           preference:{$in:query.preference}
+        }).exec();
+        res.json(tours);
+    }
+    else{
+        const tours = await Tour.find({
+            city:query.city,
+            price:{$gte: query.price_min,  $lte: query.price_max},
+            dates:{$gte: query.pre,$lte:last_day}
+         }).exec();
+         res.json(tours);
+     }
 };
 
 
