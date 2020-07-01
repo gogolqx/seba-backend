@@ -3,11 +3,7 @@ nodeGeocoder = require('node-geocoder');
 const options = {
     provider: 'openstreetmap'
   };
-function timeToString(h, m) {
-    if (h < 10) h = '0' + h;
-    if (m < 10) h = '0' + h;
-    return 'T'+h + ':' + m + ':' + '00Z';
-}
+
 var add_schedule =  function (dt, hours,mins) {
     return new Date(dt.getTime() + hours*60*60*1000+mins*60*1000);
 }
@@ -126,12 +122,8 @@ const search = async(req, res) => {
     if(req.body.preference){
         query.preference=req.body.preference;
  }
-//diff_days=(query.post-query.pre)/86400000;
-//period=[];
-//res = [];
-//for (i = 0; i <= diff_days; i++) { 
-   // period.push(add_schedule(query.pre,i*24,0));
-   last_day =add_schedule(query.post,23,59);
+
+   last_day = add_schedule(query.post,23,59);
    if(req.body.preference){
        query.preference=req.body.preference;
        const tours = await Tour.find({
