@@ -11,9 +11,9 @@ API is running in port 3000 (default)
 ***API***
 
 **authRoute: /auth**
-router.post('/login', AuthController.login);
-router.post('/register', AuthController.register);
-router.get('/logout', middlewares.checkAuthentication, AuthController.logout);
+router.post('/login', AuthController.login);/
+router.post('/register', AuthController.register);/
+router.get('/logout', middlewares.checkAuthentication, AuthController.logout);/
 
 **guideRoute: /guide_dashboard**
 router.get('/:id', GuideController.list); //dashboard for guide
