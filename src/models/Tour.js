@@ -1,24 +1,40 @@
 const mongoose = require('mongoose');
 
 const TourSchema = new mongoose.Schema({
-    /*
-    * I make review_id is an array of int(contains review ids)
-    
-    id: {
-        type: Number,
+
+    guide_id:{
+        type: String,
         required: true
-    },*/
-    guide_id: Number,
+    },
     title: {
         type: String,
         required: true
     },
-    dates:{
-        type: [Date]
+    dates_seats:{
+        type: [{
+            date: {
+                type: Date, required: true
+            },
+            seats: {
+                type: Number, 
+                min: 0,
+                validate : {
+                    validator : Number.isInteger,
+                    message   : '{VALUE} is not an integer value between 0 and 99'
+                  },
+                required: true //if ==0, no avaiable seat
+            }
+        }],
+        required: true
     },
-    img:{data: Buffer, contentType: String },
-    language: String,
-    country:{type:  { code: String, name: String },
+    img:{
+        data: Buffer, contentType: String },
+
+    language:{ 
+        type: String, default: "English"
+    },
+    country:{
+        type: { code: String, name: String },
         required: true},
     city:{
         type: String,
@@ -30,8 +46,16 @@ const TourSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    max_participants: Number,
-    price: Number,
+    max_participants: {
+        type:Number, 
+        required: true,
+        min:1,
+        max:99,
+        validate : {
+            validator : Number.isInteger,
+            message   : '{VALUE} is not an integer value between 1 and 99'
+          }},
+    price:{type:Number, default: 0},
     preference: [String],
     schedules: {
         type: [{
@@ -47,10 +71,12 @@ const TourSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    review_id: [Number],
-    rating:{
+    review_id: [String],
+    avg_rating:{
         type: Number,
-        default: 3
+        default: 3,
+        min: 0,
+        max: 5
     }
 });
 

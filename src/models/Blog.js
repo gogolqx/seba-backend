@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
 const BlogSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true
-    },
+    
     guide_id: {
-        type: Number,
+        type: String,
         required: true
     },
     blog_title: {
         type: String,
         required: true
     },
-    blog_description: String,
+    blog_description: {
+        type: String,
+        required: true
+    },
     ad_id: Number
 });
 

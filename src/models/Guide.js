@@ -1,26 +1,23 @@
 const mongoose = require('mongoose');
 
 const GuideSchema = new mongoose.Schema({
-    /*
-    * Changes from conceptual diagram:
-    * I delete name in this table
-    */
-    id: {
-        type: Number,
+    username: {
+        type: String,
+        unique: true,
         required: true
     },
-    expertise: {
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
         type: String,
         required: true
     },
-    language: {
-        type: String,
-        required: true
-    },
-    charges: Schema.Types.Decimal128,
-    about: String,
-    review_id: Number,
-    blog_id: Number
+    about: String
+    //review_id: [String],
+    //blog_id: [String]
 });
 
 module.exports = mongoose.model('Guides', GuideSchema);

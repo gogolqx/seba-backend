@@ -2,9 +2,25 @@
 
 const jwt        = require('jsonwebtoken');
 const bcrypt     = require('bcryptjs');
-
 const config     = require('../config');
 const User  = require('../models/User');
+const check_register_property  = function(req,res){ 
+    if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
+    error: 'Bad Request',
+    message: 'The request body must contain a password property'
+});
+
+if (!Object.prototype.hasOwnProperty.call(req.body, 'username')) return res.status(400).json({
+    error: 'Bad Request',
+    message: 'The request body must contain a username property'
+});
+if (!Object.prototype.hasOwnProperty.call(req.body, 'email')) return res.status(400).json({
+    error: 'Bad Request',
+    message: 'The request body must contain a email property'
+});
+const user = Object.assign(req.body, {password: bcrypt.hashSync(req.body.password, 8)});
+return user;
+}
 
 
 const login = (req,res) => {
@@ -43,56 +59,37 @@ const login = (req,res) => {
 
 
 const register = (req,res) => {
-    if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
-        error: 'Bad Request',
-        message: 'The request body must contain a password property'
-    });
-
-    if (!Object.prototype.hasOwnProperty.call(req.body, 'username')) return res.status(400).json({
-        error: 'Bad Request',
-        message: 'The request body must contain a username property'
-    });
-    if (!Object.prototype.hasOwnProperty.call(req.body, 'email')) return res.status(400).json({
-        error: 'Bad Request',
-        message: 'The request body must contain a email property'
-    });
-    const user = Object.assign(req.body, {password: bcrypt.hashSync(req.body.password, 8)});
-
-    console.log('creating user');
-    console.log(req.body);
+const user = check_register_property(req,res);
+    console.log(user.name);
     User.create(user)
         .then(user => {
-            
-            // if user is registered without errors
-            // create a token
+              // if user is registered without errors, create a token
             const token = jwt.sign({ id: user.username,  username: user.username }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
-
             res.status(200).json({token: token});
-
-
         })
-        .catch(error => {
-            
+        .catch(error => {          
             if(error.code == 11000) {
                 res.status(400).json({
                     error: 'User exists',
                     message: error.message
                 })
             }
-            else{
-                
+            else{             
                 res.status(500).json({
                     error: 'Internal server error',
                     message: error.message
                 })
             }
         });
+        //if (user.role=='guide'){Guide.create(user)}
+        ;
 
 };
 
 
+    
 const me = (req, res) => {
     User.findById(req.userId).select('username').exec()
         .then(user => {
