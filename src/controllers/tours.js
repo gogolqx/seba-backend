@@ -1,5 +1,8 @@
 const Tour = require('../models/Tour');
 nodeGeocoder = require('node-geocoder');
+//const multer = require('multer');
+const fs = require('fs');
+//const path = require('path');
 const options = {
     provider: 'openstreetmap'
   };
@@ -12,11 +15,12 @@ const geoCoder = nodeGeocoder(options);
 // creating tour
 //TODO: auth for guide id
 const create = async (req, res) => {
+    console.log(__dirname)
     if (Object.keys(req.body).length === 0) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body is empty'
     });
-    let new_req ;
+    let new_tour;
     let new_dates=[];
     await geoCoder.geocode({
         city: req.body.city,
@@ -41,7 +45,7 @@ const create = async (req, res) => {
                 }
              };
              // this is the final request
-             new_req ={
+              new_tour = new Tour ({
                 title:req.body.title,
                 dates:dates,
                 description:req.body.description,
@@ -53,15 +57,19 @@ const create = async (req, res) => {
                 schedules: req.body.schedules,
                 duration:req.body.duration,
                 price:req.body.price,
-                preference:req.body.preference
-             }
+                preference:req.body.preference,
+                img: {data: fs.readFileSync(req.body.imgPath),
+                type:'image/png'}
+             })
+             
+             
              console.log(geo_json[0]);
             })
             .catch((err)=> {
                 console.log(err);
               });
 
-    Tour.create(new_req)
+    Tour.create(new_tour)
         .then(tour => res.status(201).json(tour))
         .catch(error => res.status(500).json({
             error: 'Internal server error',

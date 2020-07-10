@@ -16,6 +16,7 @@ const TourSchema = new mongoose.Schema({
     dates:{
         type: [Date]
     },
+    img:{data: Buffer, contentType: String },
     language: String,
     country:{type:  { code: String, name: String },
         required: true},
