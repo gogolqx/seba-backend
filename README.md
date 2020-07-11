@@ -17,13 +17,13 @@ router.post('/login', AuthController.login);
 router.post('/register', AuthController.register);
 
 router.get('/logout', middlewares.checkAuthentication, AuthController.logout);\
-
+\
 
 
 **guideRoute: /guide_dashboard**
 
 router.get('/:id', GuideController.list); //dashboard for guide \
-
+\
 
 
 
@@ -32,7 +32,7 @@ router.get('/:id', GuideController.list); //dashboard for guide \
 router.get('/:id', BookController.load); // List a tour 
 
 router.post('/:id', BookController.book); // Create a booking based on a tour id\
-
+\
 
 
 **toursRoute: /tours**
@@ -46,12 +46,13 @@ router.post('/', TourController.create); // Create a new tours
 router.put('/:id',  TourController.update); // Update a tours by Id  
 
 router.delete('/:id',  TourController.remove); // Delete a tours by Id \
-
+\
 **blogRoute: /blog**
 router.post('/:username', BlogController.create); // create a blog
+
 router.get('/:username', BlogController.list); // List all blogs\
 
-
+\
 **Install node dependencies**
 
 ```
