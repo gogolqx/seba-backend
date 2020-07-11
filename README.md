@@ -49,7 +49,7 @@
 + router.delete('/:id',  TourController.remove); // Delete a tours by Id 
 
 **blogRoute: /blog**
-+ router.post('/:username', BlogController.create); // create a blog
++ router.post('/:username', BlogController.create); // create a blog under guide's username
 
 + router.get('/:username', BlogController.list); // List all blogs 
 <br/>
