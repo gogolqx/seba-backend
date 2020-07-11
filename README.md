@@ -1,4 +1,5 @@
 # seba-backend
+> basic info
   "name": "golocal-backend",
   "version": "1.0.0",
   "main": "index.js",
@@ -6,9 +7,9 @@
     "start": "nodemon index.js"
   },
   
-API is running in port 3000 (default) 
+> API is running in port 3000 (default) 
 
-***API***
+> API routes
 
 **authRoute: /auth**
 
