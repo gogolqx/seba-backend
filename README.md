@@ -9,7 +9,7 @@
   
 > API is running in port 3000 (default) 
 
-> API routes
+= API routes
 
 **authRoute: /auth**
 
