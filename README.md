@@ -16,13 +16,13 @@ API is running in port 3000 (default)
 
 + router.post('/register', AuthController.register);
 
-+ router.get('/logout', middlewares.checkAuthentication, AuthController.logout);\
++ router.get('/logout', middlewares.checkAuthentication, AuthController.logout);
 
 
 
 **guideRoute: /guide_dashboard**
 
-+ router.get('/:id', GuideController.list); //dashboard for guide \
++ router.get('/:id', GuideController.list); //dashboard for guide 
 
 
 
@@ -31,7 +31,7 @@ API is running in port 3000 (default)
 
 + router.get('/:id', BookController.load); // List a tour 
 
-+ router.post('/:id', BookController.book); // Create a booking based on a tour id \
++ router.post('/:id', BookController.book); // Create a booking based on a tour id 
 
 
 
@@ -45,14 +45,14 @@ API is running in port 3000 (default)
 
 + router.put('/:id',  TourController.update); // Update a tours by Id  
 
-+ router.delete('/:id',  TourController.remove); // Delete a tours by Id \
++ router.delete('/:id',  TourController.remove); // Delete a tours by Id 
 
 **blogRoute: /blog**
 + router.post('/:username', BlogController.create); // create a blog
 
-+ router.get('/:username', BlogController.list); // List all blogs \
-
-
++ router.get('/:username', BlogController.list); // List all blogs 
+<br/>
+<br/>
 **Install node dependencies**
 
 ```
