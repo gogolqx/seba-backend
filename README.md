@@ -21,35 +21,27 @@
 
 
 
-**guideRoute: /guide_dashboard**
-
-+ router.get('/:id', GuideController.list); //dashboard for guide 
-
-
-
-
-**bookingRoute: /booking**
-
-+ router.get('/:id', BookController.load); // List a tour 
-
-+ router.post('/:id', BookController.book); // Create a booking based on a tour id 
-
-
-
 **toursRoute: /tours**
 
 + router.post('/search', TourController.search);
 
 + router.get('/', TourController.list); // List all tours
 
-+ router.post('/', TourController.create); // Create a new tours   
++ router.post('/:userid', TourController.create); // Create a new tour by guide's id
 
-+ router.put('/:id',  TourController.update); // Update a tours by Id  
++ router.put('/:tourid',  TourController.update); // Update a tour by Id  
 
-+ router.delete('/:id',  TourController.remove); // Delete a tours by Id 
++ router.delete('/:tourid',  TourController.remove); // Delete a tour by Id 
+
+
+**bookingRoute: /booking**
+
++ router.get('/:tourid', BookController.load); // Ahow a tour detail
+
++ router.post('/:tourid', BookController.book); // Create a booking based on a tour id 
 
 **blogRoute: /blog**
-+ router.post('/:username', BlogController.create); // create a blog under guide's username
++ router.post('/:username', BlogController.create); // Create a blog under guide's username
 
 + router.get('/:username', BlogController.list); // List all blogs 
 <br/>
