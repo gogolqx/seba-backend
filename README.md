@@ -9,7 +9,7 @@
   
 > API is running in port 3000 (default) 
 
-= API routes
+## API routes
 
 **authRoute: /auth**
 
@@ -54,7 +54,10 @@
 + router.get('/:username', BlogController.list); // List all blogs 
 <br/>
 <br/>
-**Install node dependencies**
+
+## Install and Configuration
+
+**node dependencies**
 
 ```
 npm install
