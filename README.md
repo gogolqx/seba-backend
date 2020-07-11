@@ -12,47 +12,47 @@ API is running in port 3000 (default)
 
 **authRoute: /auth**
 
-router.post('/login', AuthController.login);
++ router.post('/login', AuthController.login);
 
-router.post('/register', AuthController.register);
++ router.post('/register', AuthController.register);
 
-router.get('/logout', middlewares.checkAuthentication, AuthController.logout);\
-\
++ router.get('/logout', middlewares.checkAuthentication, AuthController.logout);\
+
 
 
 **guideRoute: /guide_dashboard**
 
-router.get('/:id', GuideController.list); //dashboard for guide \
-\
++ router.get('/:id', GuideController.list); //dashboard for guide \
+
 
 
 
 **bookingRoute: /booking**
 
-router.get('/:id', BookController.load); // List a tour 
++ router.get('/:id', BookController.load); // List a tour 
 
-router.post('/:id', BookController.book); // Create a booking based on a tour id\
-\
++ router.post('/:id', BookController.book); // Create a booking based on a tour id \
+
 
 
 **toursRoute: /tours**
 
-router.post('/search', TourController.search);
++ router.post('/search', TourController.search);
 
-router.get('/', TourController.list); // List all tours
++ router.get('/', TourController.list); // List all tours
 
-router.post('/', TourController.create); // Create a new tours   
++ router.post('/', TourController.create); // Create a new tours   
 
-router.put('/:id',  TourController.update); // Update a tours by Id  
++ router.put('/:id',  TourController.update); // Update a tours by Id  
 
-router.delete('/:id',  TourController.remove); // Delete a tours by Id \
-\
++ router.delete('/:id',  TourController.remove); // Delete a tours by Id \
+
 **blogRoute: /blog**
-router.post('/:username', BlogController.create); // create a blog
++ router.post('/:username', BlogController.create); // create a blog
 
-router.get('/:username', BlogController.list); // List all blogs\
++ router.get('/:username', BlogController.list); // List all blogs \
 
-\
+
 **Install node dependencies**
 
 ```
