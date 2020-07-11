@@ -1,5 +1,7 @@
 const Tour = require('../models/Tour');
+const Guide =  require('../models/Guide');
 nodeGeocoder = require('node-geocoder');
+
 const fs = require('fs');
 const options = {
     provider: 'openstreetmap'
@@ -18,6 +20,7 @@ const create = async (req, res) => {
         error: 'Bad Request',
         message: 'The request body is empty'
     });
+    
     let new_tour;
     let new_dates=[];
     await geoCoder.geocode({
@@ -50,7 +53,7 @@ const create = async (req, res) => {
              // this is the final request
              new_tour = new Tour ({
                 title:req.body.title,
-                guide_id:'5f0828638684b26dbfe747ff', //TODO
+                guide_id:req.params.user_id,  //TODO
                 description:req.body.description,
                 country: crg.get_country(latitude,longitude),
                 city: req.body.city,
@@ -150,7 +153,7 @@ const list  = async(req, res) => {
 };
 
 const remove = (req, res) => {
-    Tour.findByIdAndRemove(req.params.id).exec()
+    Tour.findByIdAndRemove(req.params.tour_id).exec()
         .then(() => res.status(200).json({message: `Tour with id${req.params.id} was deleted`}))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
@@ -168,7 +171,7 @@ const update = (req, res) => {
         });
     }
 
-    Tour.findByIdAndUpdate(req.params.id,req.body,{
+    Tour.findByIdAndUpdate(req.params.tour_id,req.body,{
         new: true,
         runValidators: true})
         .exec()

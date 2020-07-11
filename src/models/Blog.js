@@ -14,7 +14,16 @@ const BlogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ad_id: Number
+    country:{
+        type: { code: String, name: String },
+        },
+    city:{type: String },
+    lat:  {type:Number},
+    lon:  {type:Number},
+    timestamp:{ type : Date, default: Date.now },
+    ad_id:{
+        type: String,
+    }
 });
 
 module.exports = mongoose.model('Blogs', BlogSchema);

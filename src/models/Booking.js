@@ -14,11 +14,9 @@ const BookingSchema = new mongoose.Schema({
         required: true
     },
     book_time:{ type : Date, default: Date.now },
-    num_participants: {type:Number, default: 1},
+    num_participants: {type:Number, default: 1}
     
-    review_id: {
-        type: String
-    }
+  
     
 });
 module.exports = mongoose.model('Bookings', BookingSchema);

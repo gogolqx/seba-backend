@@ -2,9 +2,9 @@ const Tour = require('../models/Tour');
 const Booking = require('../models/Booking');
 
 const load  = async(req, res) => {
-    console.log('ID:', req.params.id);
+    console.log('Tour ID:', req.params.id);
     const tour = await Tour.findById(
-        req.params.id
+        req.params.tour_id
     ).exec();
     console.log(tour.dates_seats);
     res.json(tour);
@@ -14,7 +14,7 @@ const load  = async(req, res) => {
 
 const book  = async(req, res) => {
     tour = await Tour.findById(
-        req.params.id
+        req.params.tour_id
     ).exec();
     
     console.log(tour.title);

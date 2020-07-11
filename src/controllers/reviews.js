@@ -8,7 +8,7 @@ const create = async (req, res) => {
         message: 'The request body is empty'
     });
     tour = await Tour.findById(
-        req.params.id
+        req.params.tour_id
     ).exec();
     let updated_reviews = tour.reviews
     const num_old_reviews = Object.keys(tour.reviews).length;
