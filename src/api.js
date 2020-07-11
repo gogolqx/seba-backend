@@ -8,6 +8,8 @@ const toursRoute = require('./routes/tours');
 const authRoute = require('./routes/auth');
 const guideRoute = require('./routes/guide');
 const bookingRoute = require('./routes/booking');
+const reviewsRoute = require('./routes/reviews');
+const blogRoute = require('./routes/blog');
 const middlewares = require('./middlewares/index');
 const api = express();
 
@@ -20,6 +22,7 @@ api.use(bodyParser.json());
 api.use(cors());
 api.use(bodyParser.urlencoded({ extended: false }));
 api.use(middlewares.allowCrossDomain);
+
 // Basic Routes
 
 api.get('/',(req,res) => {
@@ -32,7 +35,8 @@ api.use('/auth',authRoute)
 api.use('/tours',toursRoute);
 api.use('/guide_dashboard',guideRoute);
 api.use('/booking',bookingRoute);
-
+api.use('/reviews',reviewsRoute);
+api.use('/blog',blogRoute);
 
 
 module.exports = api;

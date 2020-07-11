@@ -91,13 +91,10 @@ const search = async(req, res) => {
     //price
     if (req.body.price_min){
         query.price_min = req.body.price_min;
-    }
-    else{query.price_min=-1;}
-    
+    }else{query.price_min=-1;}
     if (req.body.price_max){
         query.price_max = req.body.price_max;
-    }
-    else{query.price_max = 999999999;}
+    }else{query.price_max = 999999;}
 
     //date period : start_date ,end_date
     if(req.body.start_date){
@@ -108,7 +105,7 @@ const search = async(req, res) => {
         query.post =  new Date(req.body.end_date)
     }
     else{query.post =new Date ("2025-01-01");}
-    
+    //preference
     if(req.body.preference){
         query.preference=req.body.preference;
  }

@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 
 const GuideSchema = new mongoose.Schema({
+    //copied from the one automatically generated in UserSchema
+    user_id : { 
+        type: String,
+        unique: true,
+        required: true
+    },
+
     username: {
         type: String,
         unique: true,

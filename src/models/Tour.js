@@ -71,7 +71,7 @@ const TourSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    review_id: [String],
+    reviews: [String],
     avg_rating:{
         type: Number,
         default: 3,
