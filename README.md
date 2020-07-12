@@ -48,7 +48,7 @@
 <br/>
 
 ## Creating/Updating POST methods:
-#### please read the corresponding code from controllers folder carefully.
+### Please FIRST read the corresponding code from controllers folder BEFORE posting.
 
 ### Request JSON examples (using Postman to post request)
 #### 1. create a tour (router.post('/:user_id', TourController.create))
