@@ -47,12 +47,12 @@
 <br/>
 <br/>
 
-## Creating methods:
+## Creating/Updating POST methods:
 #### please read the corresponding code from controllers folder carefully.
 
-### Request JSON examples:
-#### create a tour (router.post('/:user_id', TourController.create))
-#### POST http://localhost:3000/tours/5f0828638684b26dbfe747ff
+### Request JSON examples (using Postman to post request)
+#### 1. create a tour (router.post('/:user_id', TourController.create))
+##### POST http://localhost:3000/tours/5f0828638684b26dbfe747ff
 ```
 {"title": "Munich English Garden",
 "city": "Munich",
@@ -68,9 +68,9 @@
 "max_participants": 4,
 "imgPath": "/Users/liu0001q/webeng/golocal/seba-backend/image/englischer-garten-schwabing.jpg"
 }
-
 ```
-#### create a booking (router.post('/:tour_id', BookingController.create))
+
+#### 2. create a booking (router.post('/:tour_id', BookingController.create))
 ##### POST http://localhost:3000/booking/5f0882d518a99d0200a8932b
 ##### the wishdate should be choosen from given avaiable date_blocks from tour.dates_seats
 ##### update 7.11: the request of wishdate is not yet implemented. Please see the controllers/booking.js --> book method TODO
@@ -80,7 +80,18 @@
 }
 
 ```
-#### create a blog (router.post('/:username', BlogController.create))
+#### 3.create a review (router.post('/:tour_id', ReviewController.create))
+##### POST http://localhost:3000/reviews/5f0867ce13535180a0c159c6
+
+```
+{
+"rating": 4,
+"comment": "A Test Review"
+}
+
+```
+
+#### 4.create a blog (router.post('/:username', BlogController.create))
 ##### POST http://localhost:3000/blog/guide_1
 
 ```
@@ -92,6 +103,11 @@
 }
 
 ```
+
+
+
+
+
 
 
 ## Install and Configuration
