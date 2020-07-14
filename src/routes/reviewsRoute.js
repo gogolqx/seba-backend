@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 //const middleware = require('../middlewares');
-const ReviewController = require('../controllers/reviews');
+const ReviewController = require('../controllers/reviewsController');
 
 
 router.post('/:tour_id', ReviewController.create); // create a review

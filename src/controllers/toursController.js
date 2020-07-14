@@ -23,19 +23,19 @@ const create = async (req, res) => {
     
     let new_tour;
     let new_dates=[];
-    await geoCoder.geocode({
+ /*   await geoCoder.geocode({
         city: req.body.city,
-        country: req.body.country,
         lat:req.body.lat,
         lon:req.body.lon
       })
-      .then(geo_json=>{
+      .then(()=>{
           latitude = req.body.lat;
           longitude = req.body.lon;
-          address = geo_json[0]["streetName"];
-        })
+         // address = geo_json[0]["streetName"];
+        }) */
         dates = req.body.dates;
-        
+        const latitude = req.body.lat;
+        const longitude = req.body.lon;
         let booking_dates=[];
         for (let date of dates) {
             new_date = new Date(date);

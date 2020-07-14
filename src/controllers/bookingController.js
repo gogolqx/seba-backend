@@ -18,7 +18,7 @@ const book  = async(req, res) => {
     ).exec();
     
     console.log(tour.title);
-    const wish = tour.dates_seats[0]; //TODO get wishtime from dates_seats
+    const wish = tour.dates_seats[0]; //TODO get wishtime from one of the dates_seats in frontend 
     console.log(tour.dates_seats[0]);
     const rest_seats = wish.seats - req.body.num_participants;
     if(rest_seats>0){

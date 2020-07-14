@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const middleware = require('../middlewares/index');
 
-const TourController = require('../controllers/tours');
+const TourController = require('../controllers/toursController');
 
 router.post('/search', TourController.search);
 router.get('/', TourController.list); // List all tours
