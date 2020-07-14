@@ -1,38 +1,47 @@
 "use strict";
 
+require('dotenv/config');
 const express = require('express');
 const bodyParser = require('body-parser');
-const helmet     = require('helmet');
+const helmet = require('helmet');
 const cors = require('cors');
-const toursRoute = require('./routes/tours');
-const authRoute = require('./routes/auth');
-//const guidesRoute = require('./routes/guides');
-//const usersRoute = require('./routes/users');
 const middlewares = require('./middlewares/index');
-const api = express();
+const app = express();
 
-require('dotenv/config');
+//passport
+var passport = require('passport');
+var jwtConfig = require('./passport/jwtConfig');
+app.use(passport.initialize());
+jwtConfig(passport);
+
 
 
 // Middlewares
-api.use(helmet());
-api.use(bodyParser.json());
-api.use(cors());
-api.use(bodyParser.urlencoded({ extended: false }));
-api.use(middlewares.allowCrossDomain);
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(middlewares.allowCrossDomain);
 // Basic Routes
 
-api.get('/',(req,res) => {
+app.get('/',(req,res) => {
     res.send('SEBA GROUP 34 GoLocal Backend');
 
 });
 
+const toursRoute = require('./routes/tours');
+const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
+
 // API routes
-api.use('/auth',authRoute)
-api.use('/tours',toursRoute);
+app.use('/auth',authRoute)
+app.use('/tours',toursRoute);
 //api.use('/guides',guidesRoute);
-//api.use('/users',usersRoute);
+//app.use('/users',userRoutes);
+app.use('/user', userRoute(passport));
+
+module.exports = app;
 
 
 
-module.exports = api;
+
