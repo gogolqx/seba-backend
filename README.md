@@ -69,7 +69,7 @@
 "imgPath": "/Users/liu0001q/webeng/golocal/seba-backend/image/englischer-garten-schwabing.jpg"
 }
 ```
-Logic for writing a Tour into database using req:
+##### Logic for writing a Tour into database using req:
 ```
 let booking_dates_seats=[];
         for (let date of dates) { //date is one date e.g."2020-08-21"
@@ -89,8 +89,58 @@ let booking_dates_seats=[];
         // once the wish_book_seats > available_seats, it can not be booked. 
         // e.g. If user B want to book 2 seats for the same time block as user A, it should be given a error message.
 ```
+##### Example for one Tour:
+```
+{
+  "_id": "5f08663f5e978680733ed4fc",
+  "title": "Nymphenburg Palace",
+  "guide_id": "5f0828638684b26dbfe747ff",
+  "description": "using geocoder",
+  "country": {
+      "code": "DEU",
+      "name": "Germany"
+  },
+  "city": "Munich",
+  "lat": 48.1583,
+  "lon": 11.5033,
+  "language": "English",
+  "price": 40,
+  "preference": [
+      "nature"
+  ],
+  "reviews": [],
+  "avg_rating": 3,
+  "dates_seats": [
+              {
+                  "_id": "5f08663f5e978680733ed4fd",
+                  "date": "2020-10-11T10:00:00.000Z",
+                  "seats": 8
+              },
+              {
+                  "_id": "5f08663f5e978680733ed4fe",
+                  "date": "2020-10-11T15:00:00.000Z",
+                  "seats": 8
+              },
+              {
+                  "_id": "5f08663f5e978680733ed4ff",
+                  "date": "2020-10-12T10:00:00.000Z",
+                  "seats": 8
+              },
+              {
+                  "_id": "5f08663f5e978680733ed500",
+                  "date": "2020-10-12T15:00:00.000Z",
+                  "seats": 8
+              }
+          ],
+  "img": {
+    "data": {
+        "type": "Buffer",
+         "data": [...]
+         }
+  }
+}
 
-
+```
 
 #### 2. create a booking (router.post('/:tour_id', BookingController.create))
 ##### POST http://localhost:3000/booking/5f0882d518a99d0200a8932b
