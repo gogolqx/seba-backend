@@ -48,7 +48,7 @@
 
 **reviewsoute: /reviews**
 
-+router.post('/:tour_id', ReviewController.create);
++ router.post('/:tour_id', ReviewController.create);
 
 <br/>
 <br/>
