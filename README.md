@@ -41,9 +41,10 @@
 + router.post('/:tour_id', BookController.book); // Create a booking based on a tour id 
 
 **blogRoute: /blog**
-+ router.post('/:username', BlogController.create); // Create a blog under guide's username
++ router.post('/create/:username', BlogController.create); // Create a blog under guide's username
 
-+ router.get('/:username', BlogController.list); // List all blogs 
++ router.get('/:username', BlogController.list); // List all blogs from this guide
++ router.post('/:username/:blog:id', BlogController.update); // update a blog
 <br/>
 <br/>
 
@@ -89,7 +90,7 @@ let booking_dates_seats=[];
         // once the wish_book_seats > available_seats, it can not be booked. 
         // e.g. If user B want to book 2 seats for the same time block as user A, it should be given a error message.
 ```
-##### Example for one Tour:
+##### Example for one Tour in database:
 ```
 {
   "_id": "5f08663f5e978680733ed4fc",
