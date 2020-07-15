@@ -69,6 +69,28 @@
 "imgPath": "/Users/liu0001q/webeng/golocal/seba-backend/image/englischer-garten-schwabing.jpg"
 }
 ```
+Logic for writing a Tour into database using req:
+```
+let booking_dates_seats=[];
+        for (let date of dates) { //date is one date e.g."2020-08-21"
+            new_date = new Date(date);
+            // for each date, add the schedules to get a unique date_time e.g. 2020-10-11T10:00:00.000+00:00
+            for(let schedule of req.body.schedules){ 
+                date_time = add_schedule(new_date,schedule.hours,schedule.minutes);
+                new_dates.push(date_time);
+            }
+        };
+        
+        for (let booking_d of new_dates) { //booking_d is a date_time
+            booking_dates_seats.push({"date":booking_d,"seats":req.body.max_participants}); 
+            }
+        // booking_dates_seats is a list. each element is a dictionary, with two keys: "date" and "seats". the seats are the available seats.
+        // e.g. as the guide created a new tour, seats=req.body.max_participants=4. Later, if user A booked 3 seats, then it changes to seats=1. 
+        // once the wish_book_seats > available_seats, it can not be booked. 
+        // e.g. If user B want to book 2 seats for the same time block as user A, it should be given a error message.
+```
+
+
 
 #### 2. create a booking (router.post('/:tour_id', BookingController.create))
 ##### POST http://localhost:3000/booking/5f0882d518a99d0200a8932b
