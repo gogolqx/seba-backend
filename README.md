@@ -45,6 +45,11 @@
 
 + router.get('/:username', BlogController.list); // List all blogs from this guide
 + router.post('/:username/:blog:id', BlogController.update); // update a blog
+
+**reviewsoute: /reviews**
+
++router.post('/:tour_id', ReviewController.create);
+
 <br/>
 <br/>
 
