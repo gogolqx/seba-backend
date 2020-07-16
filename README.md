@@ -14,9 +14,8 @@
 **authRoute: /auth**
 
 + router.post('/login', AuthController.login);
-
-+ router.post('/register', AuthController.register);
-
++ router.post('/register_guide', AuthController.register_guide);
++ router.post('/register_traveler', AuthController.register_traveler);
 + router.get('/logout', middlewares.checkAuthentication, AuthController.logout);
 
 
@@ -34,19 +33,19 @@
 
 **bookingRoute: /booking**
 
-+ router.get('/:tour_id', BookController.load); // Ahow a tour detail
 
-+ router.post('/:tour_id', BookController.book); // Create a booking based on a tour id 
++ router.get('/:tour_id', BookController.load); // List details for this tour
++ router.post('/:tour_id', middlewares.checkTravellerAuthentication, BookController.book); // Create a booking with Authentication
 
 **blogRoute: /blog**
-+ router.post('/:username/create', middlewares.checkGuideAuthentication,BlogController.create); // create a blog
++ router.post('/:username/create', middlewares.checkGuideAuthentication,BlogController.create); // create a blog with Authentication
 + router.get('/:username', BlogController.list); // List blogs from a guide
 + router.get('/:username/:id', BlogController.read); // read one blog
 + router.post('/:username/:id', middlewares.checkGuideAuthentication, BlogController.update); // read one blog
 
 **reviewsoute: /reviews**
 
-+ router.post('/:tour_id', ReviewController.create);
++ router.post('/:tour_id',middlewares.checkTravellerAuthentication,  ReviewController.create);
 
 <br/>
 <br/>
