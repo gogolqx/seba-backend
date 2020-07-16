@@ -41,9 +41,6 @@ const list_all  = async(req, res) => {
     const blogs = await Blog.find({
      }).exec();
      results = res.json(blogs);
-     
-     console.log('guide username ', guide.username);
-     console.log('about guide: ', guide.about);
      console.log('blogs: ', blogs.map(blog => blog.blog_title).sort());
 };
 const list  = async(req, res) => {
