@@ -17,10 +17,17 @@ const book  = async(req, res) => {
         req.params.tour_id
     ).exec();
 
-   
-    console.log(tour.title);
-    const wish = tour.dates_seats[0]; //TODO get wishtime from one of the dates_seats in frontend 
-    console.log(tour.dates_seats[0]);
+    var wish = null;
+    
+    if (req.body.desiredDateTimeID) {
+     wish = req.body.desiredDateTimeID; //TODO get wishtime from one of the dates_seats in frontend 
+     console.log("Request desiredDateTimeID From Frontend ");
+     console.log(wish);
+    }
+    else {console.log("Test mode: Please give a request of desiredDateTimeID. Using the first dates_seats for testing");
+        wish = tour.dates_seats[0]
+    }
+    
     const rest_seats = wish.seats - req.body.num_participants;
     if(rest_seats>0){
         let new_booking = new Booking ({
@@ -36,7 +43,7 @@ const book  = async(req, res) => {
             else
             {dates_seats_updated.push({"date" : date_seats.date,"seats": rest_seats})}
         }
-        console.log(dates_seats_updated);
+        //console.log(dates_seats_updated);
         await Booking.create(new_booking)
         .then(booking => res.status(201).json(booking))
         .catch(error => res.status(500).json({

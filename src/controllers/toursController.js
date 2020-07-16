@@ -1,8 +1,7 @@
 const Tour = require('../models/Tour');
-const Guide =  require('../models/Guide');
+const Image =  require('../models/Image');
 nodeGeocoder = require('node-geocoder');
 
-const fs = require('fs');
 const options = {
     provider: 'openstreetmap'
   };
@@ -13,7 +12,6 @@ var add_schedule =  function (dt, hours,mins) {
 const crg = require('country-reverse-geocoding').country_reverse_geocoding();
 const geoCoder = nodeGeocoder(options);
 // creating tour
-//TODO: auth for guide id
 const create = async (req, res) => {
     
     if (Object.keys(req.body).length === 0) return res.status(400).json({
@@ -23,53 +21,53 @@ const create = async (req, res) => {
     
     let new_tour;
     let new_dates=[];
- /*   await geoCoder.geocode({
-        city: req.body.city,
-        lat:req.body.lat,
-        lon:req.body.lon
-      })
-      .then(()=>{
-          latitude = req.body.lat;
-          longitude = req.body.lon;
-         // address = geo_json[0]["streetName"];
-        }) */
-        dates = req.body.dates;
-        const latitude = req.body.lat;
-        const longitude = req.body.lon;
-        let booking_dates=[];
-        for (let date of dates) {
-            new_date = new Date(date);
-            for(let schedule of req.body.schedules){
-                date_time = add_schedule(new_date,schedule.hours,schedule.minutes);
-                new_dates.push(date_time);
-            }
-        };
-        
-        for (let booking_d of new_dates) {
-            booking_dates.push({"date":booking_d,"seats":req.body.max_participants});
-            
-            }
-        console.log(booking_dates);
-             // this is the final request
-             new_tour = new Tour ({
-                title:req.body.title,
-                guide_id:req.params.user_id,  //TODO
-                description:req.body.description,
-                country: crg.get_country(latitude,longitude),
-                city: req.body.city,
-                lat: latitude,
-                lon: longitude,
-                dates_seats: booking_dates,
-                schedules: req.body.schedules,
-                duration: req.body.duration,
-                price: req.body.price,
-                preference: req.body.preference,
-                max_participants: req.body.max_participants,
-                img: {data: fs.readFileSync(req.body.imgPath),
-                    type: 'image/png'}
-             })
-           
-          
+    dates = req.body.dates;
+    const latitude = req.body.lat;
+    const longitude = req.body.lon;
+    let booking_dates=[];
+    for (let date of dates) {
+        new_date = new Date(date);
+        for(let schedule of req.body.schedules){
+            date_time = add_schedule(new_date,schedule.hours,schedule.minutes);
+            new_dates.push(date_time);
+        }
+    };
+    
+    for (let booking_d of new_dates) {
+        booking_dates.push({"date":booking_d,"seats":req.body.max_participants}); 
+    }
+
+    
+        var new_image_url = null;
+        console.log(req.file) // to see what is returned to you
+        const image = {};
+        if (req.file){
+            image.url = req.file.url;
+            image.id = req.file.public_id;
+            new_image_url = req.file.url;
+            await Image.create(image) // save image information in database
+            .catch(err => console.log(err));
+        }
+    console.log("Image URL: ");
+    console.log(new_image_url);
+    // this is the final request
+    new_tour = new Tour ({
+    title:req.body.title,
+    guide_id:req.userId,  
+    description:req.body.description,
+    country: crg.get_country(latitude,longitude),
+    city: req.body.city,
+    lat: latitude,
+    lon: longitude,
+    dates_seats: booking_dates,
+    schedules: req.body.schedules,
+    duration: req.body.duration,
+    price: req.body.price,
+    preference: req.body.preference,
+    max_participants: req.body.max_participants,
+    img_url: new_image_url
+    });
+
 
    await Tour.create(new_tour)
         .then(tour => res.status(201).json(tour))

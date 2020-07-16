@@ -27,8 +27,7 @@ const TourSchema = new mongoose.Schema({
         }],
         required: true
     },
-    img:{
-        data: Buffer, contentType: String },
+    img_url:String,
 
     language:{ 
         type: String, default: "English"

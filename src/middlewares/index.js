@@ -4,6 +4,7 @@ const jwt    = require('jsonwebtoken');
 
 const config = require ('../config');
 
+
 const allowCrossDomain = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -76,12 +77,13 @@ const checkTravellerAuthentication = (req, res, next) => {
     });
 };
 
-const checkGuideAuthentication = (req, res, next) => {
+const checkGuideAuthentication =  (req, res, next) => {
 
     // check header or url parameters or post parameters for token
     let token = ""
     const urlUsername = req.params.username;
-    console.log(urlUsername);
+    console.log("req.params.username: ");
+    console.log(req.params);
     if(req.headers.authorization) {
         token = req.headers.authorization;
     }
@@ -93,7 +95,7 @@ const checkGuideAuthentication = (req, res, next) => {
         });
 
     // verifies secret and checks exp
-    jwt.verify(token, config.JwtSecret, (err, decoded) => {
+     jwt.verify(token, config.JwtSecret, (err, decoded) => {
        console.log(decoded.username );
         //check if this user is a guide
         if (err) return res.status(401).send({

@@ -23,13 +23,12 @@ const create = async (req, res) => {
         console.log('old avg rating:');
         console.log(tour.avg_rating );
         const updated_avg_rating = (tour.avg_rating * num_old_reviews + req.body.rating)/(num_old_reviews+1);
-        
+        //waiting updated_avg_rating is defined
         await Tour.findByIdAndUpdate(
             req.params.id,
             {avg_rating: updated_avg_rating,
                 reviews: updated_reviews}
         );
-        
     });
     res.json(created_review); 
     
