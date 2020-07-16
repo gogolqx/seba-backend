@@ -53,7 +53,8 @@ const checkGuideAuthentication = (req, res, next) => {
 
     // check header or url parameters or post parameters for token
     let token = ""
-    const urlUsername = req.params;
+    const urlUsername = req.params.username;
+    console.log(urlUsername);
     if(req.headers.authorization) {
         token = req.headers.authorization;
     }
@@ -66,6 +67,7 @@ const checkGuideAuthentication = (req, res, next) => {
 
     // verifies secret and checks exp
     jwt.verify(token, config.JwtSecret, (err, decoded) => {
+       console.log(decoded.username );
         //check if this user is a guide
         if (decoded.role != "guide") return res.status(401).send({
             error: 'The User is not a guide',
