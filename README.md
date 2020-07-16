@@ -14,9 +14,8 @@
 **authRoute: /auth**
 
 + router.post('/login', AuthController.login);
-
-+ router.post('/register', AuthController.register);
-
++ router.post('/register_guide', AuthController.register_guide);
++ router.post('/register_traveler', AuthController.register_traveler);
 + router.get('/logout', middlewares.checkAuthentication, AuthController.logout);
 
 
