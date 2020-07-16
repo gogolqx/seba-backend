@@ -27,11 +27,9 @@
 
 + router.get('/', TourController.list); // List all tours
 
-+ router.post('/:user_id', TourController.create); // Create a new tour by guide's id
-
-+ router.put('/:tour_id',  TourController.update); // Update a tour by Id  
-
-+ router.delete('/:tour_id',  TourController.remove); // Delete a tour by Id 
++ router.post('/:user_id/create',  middlewares.checkGuideAuthentication,TourController.create); // Create a new tours with Authentication, 
++ router.put('/:user_id/:tour_id',   middlewares.checkGuideAuthentication,TourController.update); // Update a tours by Id  with Authentication
++ router.delete('/:user_id/:tour_id',  middlewares.checkGuideAuthentication, TourController.remove); // Delete a tours by Id with Authentication
 
 
 **bookingRoute: /booking**
@@ -41,10 +39,10 @@
 + router.post('/:tour_id', BookController.book); // Create a booking based on a tour id 
 
 **blogRoute: /blog**
-+ router.post('/create/:username', BlogController.create); // Create a blog under guide's username
-
-+ router.get('/:username', BlogController.list); // List all blogs from this guide
-+ router.post('/:username/:blog:id', BlogController.update); // update a blog
++ router.post('/:username/create', middlewares.checkGuideAuthentication,BlogController.create); // create a blog
++ router.get('/:username', BlogController.list); // List blogs from a guide
++ router.get('/:username/:id', BlogController.read); // read one blog
++ router.post('/:username/:id', middlewares.checkGuideAuthentication, BlogController.update); // read one blog
 
 **reviewsoute: /reviews**
 
