@@ -33,7 +33,6 @@ api.get('/',(req,res) => {
 // API routes
 api.use('/auth',authRoute)
 api.use('/tours',toursRoute);
-api.use('/guide_dashboard',guideRoute);
 api.use('/booking',bookingRoute);
 api.use('/reviews',reviewsRoute);
 api.use('/blog',blogRoute);

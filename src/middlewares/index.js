@@ -26,7 +26,6 @@ const checkAuthentication = (req, res, next) => {
     if(req.headers.authorization) {
         token = req.headers.authorization;
     }
-
     if (!token)
         return res.status(401).send({
             error: 'Unauthorized',
@@ -39,14 +38,54 @@ const checkAuthentication = (req, res, next) => {
             error: 'Unauthorized',
             message: 'Failed to authenticate token.'
         });
-
+        //console.log(req);
         // if everything is good, save to request for use in other routes
         req.userId = decoded.id;
-        //console.log(decoded.id);
+        console.log(decoded.role);
         next();
     });
 
 
+};
+
+
+const checkGuideAuthentication = (req, res, next) => {
+
+    // check header or url parameters or post parameters for token
+    let token = ""
+    const urlUsername = req.params;
+    if(req.headers.authorization) {
+        token = req.headers.authorization;
+    }
+
+    if (!token)
+        return res.status(401).send({
+            error: 'Unauthorized',
+            message: 'No token provided in the request'
+        });
+
+    // verifies secret and checks exp
+    jwt.verify(token, config.JwtSecret, (err, decoded) => {
+        //check if this user is a guide
+        if (decoded.role != "guide") return res.status(401).send({
+            error: 'The User is not a guide',
+            message: 'Only access for Guide '
+        });
+        //check if this user is the right guide that belongs to this url
+        if (decoded.username != urlUsername) return res.status(401).send({
+            error: ' Wrong Guide',
+            message: 'This Guide does not match this corresponding guides page.'
+        });
+        if (err) return res.status(401).send({
+            error: 'Unauthorized',
+            message: 'Failed to authenticate token.'
+        });
+        //console.log(req);
+        // if everything is good, save to request for use in other routes
+        req.userId = decoded.id;
+        console.log(decoded.role);
+        next();
+    });
 };
 
 const errorHandler = (err, req, res, next) => {
@@ -61,5 +100,6 @@ const errorHandler = (err, req, res, next) => {
 module.exports = {
     allowCrossDomain,
     checkAuthentication,
+    checkGuideAuthentication,
     errorHandler
 };

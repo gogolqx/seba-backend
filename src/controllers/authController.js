@@ -4,6 +4,7 @@ const jwt        = require('jsonwebtoken');
 const bcrypt     = require('bcryptjs');
 const config     = require('../config');
 const User  = require('../models/User');
+const Guide = require('../models/Guide');
 const check_register_property  = function(req,res){ 
     if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
     error: 'Bad Request',
@@ -43,7 +44,7 @@ const login = (req,res) => {
 
             // if user is found and password is valid
             // create a token
-            const token = jwt.sign({ id: user._id, username: user.username }, config.JwtSecret, {
+            const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
@@ -58,15 +59,26 @@ const login = (req,res) => {
 };
 
 
-const register = (req,res) => {
-const user = check_register_property(req,res);
-    console.log(user.name);
-    User.create(user)
-        .then(user => {
+const register_guide = async (req,res) => {
+    const user = check_register_property(req,res);
+    
+    user.role = "guide";
+    var guide = null;
+    await User.create(user)
+    
+     .then(user   => {
+        guide = {
+            user_id: user._id,
+            username: user.username,
+            email: user.email
+            }
+            Guide.create(guide);
+            console.log(guide);
               // if user is registered without errors, create a token
-            const token = jwt.sign({ id: user.username,  username: user.username }, config.JwtSecret, {
+            const token = jwt.sign({ id: user._id,  username: user.username, role: user.role }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
+            
             res.status(200).json({token: token});
         })
         .catch(error => {          
@@ -83,9 +95,34 @@ const user = check_register_property(req,res);
                 })
             }
         });
-        //if (user.role=='guide'){Guide.create(user)}
-        ;
-
+        
+    }
+       
+const register_traveler = (req,res) => {
+    const user = check_register_property(req,res);
+        console.log(user.name);
+        User.create(user)
+            .then(user => {
+                    // if user is registered without errors, create a token
+                const token = jwt.sign({ id: user.username,  username: user.username, role: user.role  }, config.JwtSecret, {
+                    expiresIn: 86400 // expires in 24 hours
+                });
+                res.status(200).json({token: token});
+            })
+            .catch(error => {          
+                if(error.code == 11000) {
+                    res.status(400).json({
+                        error: 'User exists',
+                        message: error.message
+                    })
+                }
+                else{             
+                    res.status(500).json({
+                        error: 'Internal server error',
+                        message: error.message
+                    })
+                }
+            });
 };
 
 
@@ -114,7 +151,8 @@ const logout = (req, res) => {
 
 module.exports = {
     login,
-    register,
+    register_guide,
+    register_traveler,
     logout,
     me
 };

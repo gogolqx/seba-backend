@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
 const GuideSchema = new mongoose.Schema({
-    /*copied from the one automatically generated in UserSchema
+    //copied from the one automatically generated in UserSchema
     user_id : { 
-        type: String,
-        unique: true,
+        type: Object,
         required: true
     },
-*/
+
     username: {
         type: String,
         unique: true,
@@ -16,10 +15,6 @@ const GuideSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: true
-    },
-    password: {
-        type: String,
         required: true
     },
     about: String

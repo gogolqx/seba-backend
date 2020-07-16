@@ -6,10 +6,7 @@ const TravellerSchema = new mongoose.Schema({
     * I delete name in this table
     * I make preferences are array of Strings istead of String.
     */
-    id: {
-        type: Number,
-        required: true
-    },
+    
     preferences: [String]
 });
 
