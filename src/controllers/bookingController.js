@@ -16,7 +16,8 @@ const book  = async(req, res) => {
     tour = await Tour.findById(
         req.params.tour_id
     ).exec();
-    
+
+   
     console.log(tour.title);
     const wish = tour.dates_seats[0]; //TODO get wishtime from one of the dates_seats in frontend 
     console.log(tour.dates_seats[0]);
@@ -24,7 +25,7 @@ const book  = async(req, res) => {
     if(rest_seats>0){
         let new_booking = new Booking ({
             tour_id: tour._id,
-            traveller_id: "5ef3c202a01963452bd6fc82", //TODO AUTH
+            traveller_id: req.userId, 
             datetime: wish.date,
             num_participants:req.body.num_participants
         })

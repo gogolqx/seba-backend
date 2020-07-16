@@ -19,7 +19,6 @@ const allowCrossDomain = (req, res, next) => {
 };
 
 const checkAuthentication = (req, res, next) => {
-
     // check header or url parameters or post parameters for token
     let token = ""
     //console.log(req);
@@ -44,10 +43,38 @@ const checkAuthentication = (req, res, next) => {
         console.log(decoded.role);
         next();
     });
-
-
 };
+const checkTravellerAuthentication = (req, res, next) => {
+    // check header or url parameters or post parameters for token
+    let token = ""
+    //console.log(req);
+    if(req.headers.authorization) {
+        token = req.headers.authorization;
+    }
+    if (!token)
+        return res.status(401).send({
+            error: 'Unauthorized',
+            message: 'No token provided in the request'
+        });
 
+    // verifies secret and checks exp
+    jwt.verify(token, config.JwtSecret, (err, decoded) => {
+        if (err) return res.status(401).send({
+            error: 'Unauthorized',
+            message: 'Failed to authenticate token.'
+        });
+        if (decoded.role != "traveler") return res.status(401).send({
+            error: 'The User is not a traveler',
+            message: 'Only access for Traveler '
+        });
+        //console.log(req);
+        // if everything is good, save to request for use in other routes
+        req.userId = decoded.id;
+        console.log(decoded.role);
+        console.log(decoded.id);
+        next();
+    });
+};
 
 const checkGuideAuthentication = (req, res, next) => {
 
@@ -69,6 +96,10 @@ const checkGuideAuthentication = (req, res, next) => {
     jwt.verify(token, config.JwtSecret, (err, decoded) => {
        console.log(decoded.username );
         //check if this user is a guide
+        if (err) return res.status(401).send({
+            error: 'Unauthorized',
+            message: 'Failed to authenticate token.'
+        });
         if (decoded.role != "guide") return res.status(401).send({
             error: 'The User is not a guide',
             message: 'Only access for Guide '
@@ -78,10 +109,7 @@ const checkGuideAuthentication = (req, res, next) => {
             error: ' Wrong Guide',
             message: 'This Guide does not match this corresponding guides page.'
         });
-        if (err) return res.status(401).send({
-            error: 'Unauthorized',
-            message: 'Failed to authenticate token.'
-        });
+        
         //console.log(req);
         // if everything is good, save to request for use in other routes
         req.userId = decoded.id;
@@ -102,6 +130,7 @@ const errorHandler = (err, req, res, next) => {
 module.exports = {
     allowCrossDomain,
     checkAuthentication,
+    checkTravellerAuthentication,
     checkGuideAuthentication,
     errorHandler
 };

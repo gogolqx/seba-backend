@@ -101,10 +101,11 @@ const register_guide = async (req,res) => {
 const register_traveler = (req,res) => {
     const user = check_register_property(req,res);
         console.log(user.name);
+        user.role = "traveler";
         User.create(user)
             .then(user => {
                     // if user is registered without errors, create a token
-                const token = jwt.sign({ id: user.username,  username: user.username, role: user.role  }, config.JwtSecret, {
+                const token = jwt.sign({ id: user._id,  username: user.username, role: user.role  }, config.JwtSecret, {
                     expiresIn: 86400 // expires in 24 hours
                 });
                 res.status(200).json({token: token});
