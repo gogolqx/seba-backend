@@ -5,6 +5,7 @@ const bcrypt     = require('bcryptjs');
 const config     = require('../config');
 const User  = require('../models/User');
 const Guide = require('../models/Guide');
+const Traveler = require('../models/Traveller');
 const check_register_property  = function(req,res){ 
     if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
     error: 'Bad Request',
@@ -98,12 +99,20 @@ const register_guide = async (req,res) => {
         
     }
        
-const register_traveler = (req,res) => {
+const register_traveler = async(req,res) => {
+    console.log("register a traveler...");
     const user = check_register_property(req,res);
-        console.log(user.name);
-        user.role = "traveler";
-        User.create(user)
+    var traveler = null;
+    user.role = "traveler";
+    await User.create(user)
             .then(user => {
+                traveler = {
+                    user_id: user._id,
+                    username: user.username,
+                    email: user.email
+                    }
+                    Traveler.create(traveler);
+                    console.log(traveler);
                     // if user is registered without errors, create a token
                 const token = jwt.sign({ id: user._id,  username: user.username, role: user.role  }, config.JwtSecret, {
                     expiresIn: 86400 // expires in 24 hours
