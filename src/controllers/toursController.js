@@ -176,7 +176,6 @@ module.exports = {
     create,
     search,
     //  read,
-    getHome: home,
     update,
     remove,
     list,
