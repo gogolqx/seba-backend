@@ -1,16 +1,19 @@
 const Tour = require('../models/Tour');
-const Image =  require('../models/Image');
 nodeGeocoder = require('node-geocoder');
+
 
 const options = {
     provider: 'openstreetmap'
   };
 
+ 
 var add_schedule =  function (dt, hours,mins) {
     return new Date(dt.getTime() + hours*60*60*1000+mins*60*1000);
 }
 const crg = require('country-reverse-geocoding').country_reverse_geocoding();
 const geoCoder = nodeGeocoder(options);
+
+
 // creating tour
 const create = async (req, res) => {
     
@@ -18,7 +21,7 @@ const create = async (req, res) => {
         error: 'Bad Request',
         message: 'The request body is empty'
     });
-    
+  
     let new_tour;
     let new_dates=[];
     dates = req.body.dates;
@@ -36,20 +39,7 @@ const create = async (req, res) => {
     for (let booking_d of new_dates) {
         booking_dates.push({"date":booking_d,"seats":req.body.max_participants}); 
     }
-
     
-        var new_image_url = null;
-        console.log(req.file) // to see what is returned to you
-        const image = {};
-        if (req.file){
-            image.url = req.file.url;
-            image.id = req.file.public_id;
-            new_image_url = req.file.url;
-            await Image.create(image) // save image information in database
-            .catch(err => console.log(err));
-        }
-    console.log("Image URL: ");
-    console.log(new_image_url);
     // this is the final request
     new_tour = new Tour ({
     title:req.body.title,
@@ -76,6 +66,9 @@ const create = async (req, res) => {
             message: error.message
         }));
 };
+// 
+
+
 
 // searching for tours on conditions
 const search = async(req, res) => {
@@ -183,7 +176,30 @@ module.exports = {
     create,
     search,
     //  read,
+    getHome: home,
     update,
     remove,
-    list
+    list,
 };
+
+/*backup using boy to upload file in local disk
+
+const upload = async(req,res)=>{
+    if (req.busboy) {
+        console.log(req.busboy);
+        req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+           var saveTo = path.join(__dirname.replace('routes', 'static'), "yourFileName");
+           console.log(saveTo);   
+            file.pipe(fs.createWriteStream(saveTo));
+            file.on('end', function () {
+                   //database
+               res.json({
+                   success: true
+                });
+            });
+        });
+        req.pipe(req.busboy);
+    }
+   
+};
+*/

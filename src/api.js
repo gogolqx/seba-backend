@@ -10,11 +10,10 @@ const guideRoute = require('./routes/guideRoute');
 const bookingRoute = require('./routes/bookingRoute');
 const reviewsRoute = require('./routes/reviewsRoute');
 const blogRoute = require('./routes/blogRoute');
-const middlewares = require('./middlewares/index');
+const middlewares = require('./middlewares/authentication');
 const api = express();
 
 require('dotenv/config');
-
 
 // Middlewares
 api.use(helmet());
@@ -22,7 +21,7 @@ api.use(bodyParser.json());
 api.use(cors());
 api.use(bodyParser.urlencoded({ extended: false }));
 api.use(middlewares.allowCrossDomain);
-
+//api.use(multer.multerUploads);
 // Basic Routes
 
 api.get('/',(req,res) => {
@@ -36,6 +35,5 @@ api.use('/tours',toursRoute);
 api.use('/booking',bookingRoute);
 api.use('/reviews',reviewsRoute);
 api.use('/blog',blogRoute);
-
 
 module.exports = api;

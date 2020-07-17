@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const middlewares = require('../middlewares/index');
+const middlewares = require('../middlewares/authentication');
 
 
 
