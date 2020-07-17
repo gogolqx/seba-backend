@@ -9,13 +9,13 @@ const uploadFile = async (req, res) => {
       return res.send(`You must select a file.`);
     }
 
-    return res.json({file:req.file});
+    return res.json(req.file);
   } catch (error) {
     console.log(error);
     return res.send(`Error when trying upload image: ${error}`);
   }
 };
-
+s
 module.exports = {
     uploadFile
 };
