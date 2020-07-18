@@ -22,9 +22,12 @@ const allowCrossDomain = (req, res, next) => {
 const checkAuthentication = (req, res, next) => {
     // check header or url parameters or post parameters for token
     let token = ""
-    //console.log(req);
+    
     if(req.headers.authorization) {
-        token = req.headers.authorization;
+        
+        token = req.headers.authorization.split("JWT ")[1];
+        console.log(token);
+        
     }
     if (!token)
         return res.status(401).send({
@@ -34,6 +37,7 @@ const checkAuthentication = (req, res, next) => {
 
     // verifies secret and checks exp
     jwt.verify(token, config.JwtSecret, (err, decoded) => {
+
         if (err) return res.status(401).send({
             error: 'Unauthorized',
             message: 'Failed to authenticate token.'
@@ -50,16 +54,17 @@ const checkTravellerAuthentication = (req, res, next) => {
     let token = ""
     //console.log(req);
     if(req.headers.authorization) {
-        token = req.headers.authorization;
+        token = req.headers.authorization.split("JWT ")[1];
     }
     if (!token)
         return res.status(401).send({
             error: 'Unauthorized',
             message: 'No token provided in the request'
         });
-
+        
     // verifies secret and checks exp
     jwt.verify(token, config.JwtSecret, (err, decoded) => {
+        
         if (err) return res.status(401).send({
             error: 'Unauthorized',
             message: 'Failed to authenticate token.'
@@ -80,12 +85,13 @@ const checkTravellerAuthentication = (req, res, next) => {
 const checkGuideAuthentication =  (req, res, next) => {
 
     // check header or url parameters or post parameters for token
-    let token = ""
-    const urlUsername = req.params.username;
-    console.log("req.params.username: ");
     console.log(req.params);
+    let token = ""
+
+    const urlUsername = req.params.username;
+    
     if(req.headers.authorization) {
-        token = req.headers.authorization;
+        token = req.headers.authorization.split("JWT ")[1];
     }
 
     if (!token)
@@ -95,8 +101,8 @@ const checkGuideAuthentication =  (req, res, next) => {
         });
 
     // verifies secret and checks exp
-     jwt.verify(token, config.JwtSecret, (err, decoded) => {
-       console.log(decoded.username );
+      jwt.verify(token, config.JwtSecret, (err, decoded) => {
+       console.log(token );
         //check if this user is a guide
         if (err) return res.status(401).send({
             error: 'Unauthorized',

@@ -25,7 +25,7 @@ return user;
 }
 
 
-const login = (req,res) => {
+const login = async(req,res) => {
     if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body must contain a password property'
@@ -35,8 +35,7 @@ const login = (req,res) => {
         error: 'Bad Request',
         message: 'The request body must contain a username property'
     });
-
-    User.findOne({username: req.body.username}).exec()
+    await User.findOne({username: req.body.username}).exec()
         .then(user => {
 
             // check if the password is valid
@@ -48,7 +47,7 @@ const login = (req,res) => {
             const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
-
+            console.log("token is given")
             res.status(200).json({token: token});
 
         })
@@ -74,7 +73,7 @@ const register_guide = async (req,res) => {
             email: user.email
             }
             Guide.create(guide);
-            console.log(guide);
+            console.log("create guide");
               // if user is registered without errors, create a token
             const token = jwt.sign({ id: user._id,  username: user.username, role: user.role }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours

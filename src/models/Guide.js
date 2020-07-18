@@ -12,11 +12,7 @@ const GuideSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
+   
     about: String
     //review_id: [String],
     //blog_id: [String]
