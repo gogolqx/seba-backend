@@ -61,7 +61,7 @@ const login = async(req,res) => {
 
 const register_guide = async (req,res) => {
     const user = check_register_property(req,res);
-    
+    console.log("you are registering as a guide")
     user.role = "guide";
     var guide = null;
     await User.create(user)
@@ -73,7 +73,7 @@ const register_guide = async (req,res) => {
             email: user.email
             }
             Guide.create(guide);
-            console.log("create guide");
+            
               // if user is registered without errors, create a token
             const token = jwt.sign({ id: user._id,  username: user.username, role: user.role }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours

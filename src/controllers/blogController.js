@@ -16,25 +16,28 @@ const create = async (req, res) => {
         .select()
         .exec();
     console.log(guide);
-    const new_blog = new Blog({
-        username: guide.username,
-        guide_id: guide._id, 
-        blog_title: req.body.title,
-        blog_description:req.body.content,
-        lat: req.body.lat,
-        lon: req.body.lon,
-        city: req.body.city,
-        country: crg.get_country(req.body.lat,req.body.lon),
-        
-    })
-    await Blog.create(new_blog)
-    .then(blog => res.status(201).json(blog),
-    console.log("successful created a new blog!")
-    )
-    .catch(error => res.status(500).json({
-        error: 'Internal server error',
-        message: error.message
-    }));
+    if (guide)
+        {const new_blog = new Blog({
+            username: guide.username,
+            guide_id: guide._id, 
+            blog_title: req.body.title,
+            blog_description:req.body.content,
+            lat: req.body.lat,
+            lon: req.body.lon,
+            city: req.body.city,
+            country: crg.get_country(req.body.lat,req.body.lon),
+            
+        })
+        await Blog.create(new_blog)
+        .then(blog => res.status(201).json(blog),
+        console.log("successful created a new blog!")
+        )
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+    }
+    else { console.log("you are not a guilde.")}
 }
 const list_all  = async(req, res) => {
     
