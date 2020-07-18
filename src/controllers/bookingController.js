@@ -76,10 +76,22 @@ const usersTour  = async(req, res) => {
     {traveller_id:user._id}
   ).exec();
 
-  // tourIds = bookings.map(booking => booking.tour_id).sort();
-  // console.log('tourIds: ', tourIds);
-  // console.log('blobookings: ', bookings.map(booking => booking.tour_id).sort());
-  res.json(bookings);
+  // const allTours = [];
+  const allCategories = [];
+  for (let booking of bookings) {
+      const tours = await Tour.find(
+        {_id:booking.tour_id}
+      ).exec();
+      for (let tour of tours) {
+        allCategories.push(tour.preference);
+      }
+      // allTours.push(tours);
+  };
+  //console.log('allTours: ', allTours);
+  //console.log('allCategories: ', allCategories);
+
+  // sending all categories that coming from previous bookings of the user.
+  res.json(allCategories);
 };
 
 
