@@ -1,5 +1,6 @@
 const Tour = require('../models/Tour');
 const Booking = require('../models/Booking');
+const User = require('../models/User');
 
 const load  = async(req, res) => {
     console.log('Tour ID:', req.params.id);
@@ -18,21 +19,21 @@ const book  = async(req, res) => {
     ).exec();
 
     var wish = null;
-    
+
     if (req.body.desiredDateTimeID) {
-     wish = req.body.desiredDateTimeID; //TODO get wishtime from one of the dates_seats in frontend 
+     wish = req.body.desiredDateTimeID; //TODO get wishtime from one of the dates_seats in frontend
      console.log("Request desiredDateTimeID From Frontend ");
      console.log(wish);
     }
     else {console.log("Test mode: Please give a request of desiredDateTimeID. Using the first dates_seats for testing");
         wish = tour.dates_seats[0]
     }
-    
+
     const rest_seats = wish.seats - req.body.num_participants;
     if(rest_seats>0){
         let new_booking = new Booking ({
             tour_id: tour._id,
-            traveller_id: req.userId, 
+            traveller_id: req.userId,
             datetime: wish.date,
             num_participants:req.body.num_participants
         })
@@ -56,16 +57,35 @@ const book  = async(req, res) => {
             runValidators: true})
             .exec();
         }
-        else{ 
+        else{
             // number of participants exceeds the rest seats
             console.log("not enough available seats!")
         };
 };
 
+const usersTour  = async(req, res) => {
+  const user = await User.findOne(
+      {username : req.params.username}
+  ).select().exec();
+
+  if (user.role === "guide") return res.status(404).json({
+      error: 'Not Found',
+      message: `User not found`
+  });
+  const bookings = await Booking.find(
+    {traveller_id:user._id}
+  ).exec();
+
+  // tourIds = bookings.map(booking => booking.tour_id).sort();
+  // console.log('tourIds: ', tourIds);
+  // console.log('blobookings: ', bookings.map(booking => booking.tour_id).sort());
+  res.json(bookings);
+};
 
 
 module.exports = {
-    
+
     load,
-    book
+    book,
+    usersTour
 };
