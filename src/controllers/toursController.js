@@ -18,7 +18,6 @@ const geoCoder = nodeGeocoder(options);
 
 // creating tour
 const create = async (req, res) => {
-    console.log("your are creating a tour");
     if (Object.keys(req.body).length === 0) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body is empty'
@@ -145,7 +144,6 @@ const read  = async(req, res) => {
 // listing all tours
 
 const list  = async(req, res) => {
-    console.log('I am here getting tour');
     try{
         const tours = await Tour.find();
         res.json(tours);
