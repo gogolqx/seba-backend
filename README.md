@@ -39,11 +39,11 @@ But it is only for this special case. If you do not see .env, please contact us.
 ## Start the project
 
 **Production environment**
-```bash
+```
 npm start
 ```
 when you see this in the terminal, you are successfully connected.
-```bash
+```
 Connected to DB!
 API is running in port 3000
 ```
