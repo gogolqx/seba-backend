@@ -16,7 +16,7 @@ const TourSchema = new mongoose.Schema({
                 type: Date, required: true
             },
             seats: {
-                type: Number, 
+                type: Number,
                 min: 0,
                 validate : {
                     validator : Number.isInteger,
@@ -29,7 +29,7 @@ const TourSchema = new mongoose.Schema({
     },
     img_url:String,
 
-    language:{ 
+    language:{
         type: String, default: "English"
     },
     country:{
@@ -46,7 +46,7 @@ const TourSchema = new mongoose.Schema({
         required: true
     },
     max_participants: {
-        type:Number, 
+        type:Number,
         required: true,
         min:1,
         max:99,
@@ -76,6 +76,10 @@ const TourSchema = new mongoose.Schema({
         default: 3,
         min: 0,
         max: 5
+    },
+    likes:{
+      type: Number,
+      default: 0
     }
 });
 
