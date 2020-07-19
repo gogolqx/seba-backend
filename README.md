@@ -1,6 +1,6 @@
 # seba-backend
 + Here is repo for seba-golocal backend based on Express. 
-+ For [frontend](https://github.com/sencege/seba-frontend).
++ For our frontend, please go [seba-golocal-frontend](https://github.com/sencege/seba-frontend).
 > basic info
   "name": "golocal-backend",
   "version": "1.0.0",
