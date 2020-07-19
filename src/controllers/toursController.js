@@ -57,7 +57,7 @@ const create = async (req, res) => {
     price: req.body.price,
     preference: req.body.preference,
     max_participants: req.body.max_participants,
-    image_url: req.body.image_url
+    img_url: req.body.image_url
     });
 
 
