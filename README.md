@@ -8,6 +8,40 @@
   },
   
 > API is running in port 3000 (default) 
+## Install and Configuration
+
+**node dependencies**
+
+```
+npm install
+```
+
+**Set up the configuration for database and cloudinary **
+
+In order to make a quicker delivery for submission, we already add  .env file. So you do not need set them manually.  
+But it is only for this special case.  
+
+-------------this is our mongodb database --------------------
+* URI for mongodb-compass: mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/test
+* URI for node.js:  mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/<dbname>?retryWrites=true&w=majority
+  
+substitute <dbname> to golocal-db
+and <password>
+--------------this is our mongodb database -------------------
+  
+## Start the project
+
+
+
+**Development environment**
+```bash
+npm run devstart
+```
+
+**Production environment**
+```bash
+npm start
+```
 
 ## API routes
 
@@ -69,7 +103,7 @@
 "preference":"nature",
 "duration": 2,
 "max_participants": 4,
-"imgPath": "/Users/liu0001q/webeng/golocal/seba-backend/image/englischer-garten-schwabing.jpg"
+"img_url": "...url at cloudinary"
 }
 ```
 ##### Logic for writing a Tour into database using req:
@@ -185,32 +219,3 @@ let booking_dates_seats=[];
 
 
 
-## Install and Configuration
-
-**node dependencies**
-
-```
-npm install
-```
-
-**Set up your database**
-
-* URI for mongodb-compass: mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/test
-* URI for node.js:  mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/<dbname>?retryWrites=true&w=majority
-  
-substitute <dbname> to golocal-db
-and <password>
-  
-## Start the project
-
-
-
-**Development environment**
-```bash
-npm run devstart
-```
-
-**Production environment**
-```bash
-npm start
-```
