@@ -8,7 +8,6 @@ var storage = new GridFsStorage({
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
     const match = ["image/png", "image/jpeg"];
-    console.log(file);
     if (match.indexOf(file.mimetype) === -1) {
       const filename = `${Date.now()}-tour-${file.originalname}`;
       return filename;

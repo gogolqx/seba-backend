@@ -18,22 +18,18 @@ module.exports = {
       res.render('tours/create');
   },
   create: async function  (req, res) {
-      console.log("req.files")
-      console.log(req.files)
       // Use Cloudinary uploader to upload to cloudinary sever
       // Access files uploaded from the browser using req.files
       cloudinary.uploader.upload(req.files.file.path, async function(result) {
           // Create a post model
           // by assembling all data as object
           // and passing to Model instance
-          console.log(result);
           var post = new Image({
               title: result.original_filename,
               // Store the URL in a DB for future use
               image_url: result.url,
               image_id: result.public_id
           });
-          console.log(post);
           // Persist by saving
           await Image.create(post).then(post => res.status(201).json(post),
           console.log("successful uploaded")

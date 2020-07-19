@@ -15,10 +15,7 @@ const GuideSchema = new mongoose.Schema({
     email: {
         type: String
     },
-   
     about: String
-    //review_id: [String],
-    //blog_id: [String]
 });
 
 module.exports = mongoose.model('Guides', GuideSchema);

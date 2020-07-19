@@ -10,12 +10,10 @@ const create = async (req, res) => {
         error: 'Bad Request',
         message: 'The request body is empty'
     });
-    console.log('Username:', req.params.username);
     const guide = await Guide.findOne(
         {username : req.params.username})
         .select()
         .exec();
-    console.log(guide);
     if (guide)
         {const new_blog = new Blog({
             username: guide.username,
@@ -30,14 +28,13 @@ const create = async (req, res) => {
         })
         await Blog.create(new_blog)
         .then(blog => res.status(201).json(blog),
-        console.log("successful created a new blog!")
         )
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
         }));
     }
-    else { console.log("you are not a guilde.")}
+    else { console.log("you are not a guide.")}
 }
 const list_all  = async(req, res) => {
     
@@ -47,12 +44,11 @@ const list_all  = async(req, res) => {
      console.log('blogs: ', blogs.map(blog => blog.blog_title).sort());
 };
 const list  = async(req, res) => {
-    console.log('Username:', req.params);
     const guide = await Guide.findOne(
         {username : req.params.username})
         .select()
         .exec();
-        console.log('guide:', guide);
+
     const blogs = await Blog.find({
         guide_id: guide._id
        
@@ -64,15 +60,10 @@ const list  = async(req, res) => {
      console.log('blogs: ', blogs.map(blog => blog.blog_title).sort());
 };
 const read  = async(req, res) => {
-    console.log('blog_id:', req.params.id);
     const blogs = await Blog.findById(req.params.id).exec();
      results = res.json(blogs);
-     
-     //console.log('blogs: ', blogs.map(blog => blog.blog_title).sort());
 };
 const update = (req, res) => {
-    console.log("updating blogs")
-    console.log(req.body)
     if (Object.keys(req.body).length === 0)
     {
         return res.status(400).json({
