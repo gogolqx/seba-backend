@@ -1,4 +1,6 @@
 const Tour = require('../models/Tour');
+const User = require('../models/User');
+
 nodeGeocoder = require('node-geocoder');
 
 
@@ -6,7 +8,7 @@ const options = {
     provider: 'openstreetmap'
   };
 
- 
+
 var add_schedule =  function (dt, hours,mins) {
     return new Date(dt.getTime() + hours*60*60*1000+mins*60*1000);
 }
@@ -16,12 +18,12 @@ const geoCoder = nodeGeocoder(options);
 
 // creating tour
 const create = async (req, res) => {
-    
+
     if (Object.keys(req.body).length === 0) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body is empty'
     });
-  
+
     let new_tour;
     let new_dates=[];
     dates = req.body.dates;
@@ -35,15 +37,15 @@ const create = async (req, res) => {
             new_dates.push(date_time);
         }
     };
-    
+
     for (let booking_d of new_dates) {
-        booking_dates.push({"date":booking_d,"seats":req.body.max_participants}); 
+        booking_dates.push({"date":booking_d,"seats":req.body.max_participants});
     }
-    
+
     // this is the final request
     new_tour = new Tour ({
     title:req.body.title,
-    guide_id:req.userId,  
+    guide_id:req.userId,
     description:req.body.description,
     country: crg.get_country(latitude,longitude),
     city: req.body.city,
@@ -66,7 +68,7 @@ const create = async (req, res) => {
             message: error.message
         }));
 };
-// 
+//
 
 
 
@@ -131,7 +133,7 @@ const search = async(req, res) => {
 
 
 // listing all tours
-//TODO: 
+//TODO:
 const list  = async(req, res) => {
     console.log('I am here getting tour');
     try{
@@ -140,8 +142,28 @@ const list  = async(req, res) => {
     }catch(err){
         res.json({message:err});
     }
-
 };
+
+const guidesTours  = async(req, res) => {
+  console.log(req.body);
+  
+  const user = await User.findOne(
+      {username : req.params.username}
+  ).select().exec();
+  console.log('user: ', user);
+
+  if (user.role === "traveler") return res.status(404).json({
+      error: 'Not Found',
+      message: `User not found`
+  });
+  const tours = await Tour.find(
+    {guide_id:user._id}
+  ).exec();
+
+  console.log('tours: ', tours);
+  res.json(tours);
+};
+
 
 const remove = (req, res) => {
     Tour.findByIdAndRemove(req.params.tour_id).exec()
@@ -152,13 +174,13 @@ const remove = (req, res) => {
         }));
 };
 // updating tour
-//TODO: 
+//TODO:
 const update = (req, res) => {
     if (Object.keys(req.body).length === 0)
     {
         return res.status(400).json({
             error: 'Bad Request',
-            message: 'The request body is empty' 
+            message: 'The request body is empty'
         });
     }
 
@@ -179,6 +201,7 @@ module.exports = {
     update,
     remove,
     list,
+    guidesTours,
 };
 
 /*backup using boy to upload file in local disk
@@ -188,7 +211,7 @@ const upload = async(req,res)=>{
         console.log(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
            var saveTo = path.join(__dirname.replace('routes', 'static'), "yourFileName");
-           console.log(saveTo);   
+           console.log(saveTo);
             file.pipe(fs.createWriteStream(saveTo));
             file.on('end', function () {
                    //database
@@ -199,6 +222,6 @@ const upload = async(req,res)=>{
         });
         req.pipe(req.busboy);
     }
-   
+
 };
 */
