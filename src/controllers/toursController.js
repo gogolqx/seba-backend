@@ -157,7 +157,7 @@ const list  = async(req, res) => {
 
 const remove = (req, res) => {
     Tour.findByIdAndRemove(req.params.tour_id).exec()
-        .then(() => res.status(200).json({message: `Tour with id${req.params.id} was deleted`}))
+        .then(() => res.status(200).json({message: `Tour with id${req.params.tour_id} was deleted`}))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
