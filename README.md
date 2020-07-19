@@ -9,14 +9,22 @@
   
 > API is running in port 3000 (default) 
 ## Install and Configuration
+### Before first run
+
+Go to your project root folder via command line
+```
+cd /seba-group34-golocal-backend
+```
+
 
 ### Add node dependencies
+
 
 ```
 npm install
 ```
 
-### Set up the configuration for database and cloudinary
+### Set up the local configuration for JWT, database and cloudinary
 
 In order to make a quicker delivery for submission, we already add  .env file. So you do not need set them manually.  
 But it is only for this special case.  
