@@ -83,7 +83,15 @@ const update = (req, res) => {
         new: true,
         runValidators: true})
         .exec()
-        .then(tour => res.status(200).json(tour))
+        .then(blog => res.status(200).json(blog))
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+};
+const remove = (req, res) => {
+    BlogModel.findByIdAndRemove(req.params.blog_id).exec()
+        .then(() => res.status(200).json({message: `Blog with id${req.params.blog_id} was deleted`}))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
@@ -94,5 +102,6 @@ module.exports = {
     list,
     list_all,
     read,
-    update
+    update,
+    remove
 };
