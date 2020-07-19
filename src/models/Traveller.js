@@ -6,7 +6,7 @@ const TravellerSchema = new mongoose.Schema({
     type: Object,
     required: true
 },
-
+preferences:{ type: [String], enum: ['nature', 'tech','food','culture','art'] },
 username: {
     type: String,
     unique: true,

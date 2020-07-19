@@ -16,6 +16,7 @@
     "body-parser": "^1.19.0",
     "cloudinary": "^1.22.0",
     "connect-busboy": "0.0.2",
+    "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "country-reverse-geocoding": "^0.2.2",
     "datauri": "^3.0.0",
