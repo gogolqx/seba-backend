@@ -35,5 +35,4 @@ api.use('/tours',toursRoute);
 api.use('/booking',bookingRoute);
 api.use('/reviews',reviewsRoute);
 api.use('/blog',blogRoute);
-api.use(express.static('public'));
 module.exports = api;
