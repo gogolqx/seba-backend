@@ -172,8 +172,7 @@ const update = (req, res) => {
             error: 'Bad Request',
             message: 'The request body is empty'
         });
-    }
-
+    };
     Tour.findByIdAndUpdate(req.params.tour_id,req.body,{
         new: true,
         runValidators: true})
@@ -184,7 +183,7 @@ const update = (req, res) => {
             message: error.message
         }));
 };
-const guidesTours  = async(req, res) => {
+const usersTours  = async(req, res) => {
     console.log(req.params.username);
     const user = await User.findOne(
         {username : req.params.username}
@@ -228,7 +227,7 @@ module.exports = {
     update,
     remove,
     list,
-    guidesTours
+    usersTours
 };
 
 /*backup using boy to upload file in local disk
