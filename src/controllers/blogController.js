@@ -71,6 +71,7 @@ const read  = async(req, res) => {
      //console.log('blogs: ', blogs.map(blog => blog.blog_title).sort());
 };
 const update = (req, res) => {
+    console.log(req.body)
     if (Object.keys(req.body).length === 0)
     {
         return res.status(400).json({
@@ -79,11 +80,19 @@ const update = (req, res) => {
         });
     }
 
-    Blog.findByIdAndUpdate(req.params.blog_id,req.body,{
+    Blog.findByIdAndUpdate(req.body._id,req.body,{
         new: true,
         runValidators: true})
         .exec()
-        .then(tour => res.status(200).json(tour))
+        .then(blog => res.status(200).json(blog))
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+};
+const remove = (req, res) => {
+    BlogModel.findByIdAndRemove(req.params.blog_id).exec()
+        .then(() => res.status(200).json({message: `Blog with id${req.params.blog_id} was deleted`}))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
@@ -94,5 +103,6 @@ module.exports = {
     list,
     list_all,
     read,
-    update
+    update,
+    remove
 };

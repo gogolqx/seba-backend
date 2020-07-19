@@ -26,6 +26,7 @@ return user;
 
 
 const login = async(req,res) => {
+    console.log(req);
     if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body must contain a password property'
