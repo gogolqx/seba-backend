@@ -26,8 +26,6 @@ const checkAuthentication = (req, res, next) => {
     if(req.headers.authorization) {
         
         token = req.headers.authorization.split("JWT ")[1];
-        console.log(token);
-        
     }
     if (!token)
         return res.status(401).send({
@@ -42,7 +40,6 @@ const checkAuthentication = (req, res, next) => {
             error: 'Unauthorized',
             message: 'Failed to authenticate token.'
         });
-        //console.log(req);
         // if everything is good, save to request for use in other routes
         req.userId = decoded.id;
         console.log(decoded.role);
@@ -52,7 +49,6 @@ const checkAuthentication = (req, res, next) => {
 const checkTravellerAuthentication = (req, res, next) => {
     // check header or url parameters or post parameters for token
     let token = ""
-    //console.log(req);
     if(req.headers.authorization) {
         token = req.headers.authorization.split("JWT ")[1];
     }
@@ -73,7 +69,6 @@ const checkTravellerAuthentication = (req, res, next) => {
             error: 'The User is not a traveler',
             message: 'Only access for Traveler '
         });
-        //console.log(req);
         // if everything is good, save to request for use in other routes
         req.userId = decoded.id;
         console.log(decoded.role);
@@ -85,7 +80,6 @@ const checkTravellerAuthentication = (req, res, next) => {
 const checkGuideAuthentication =  (req, res, next) => {
 
     // check header or url parameters or post parameters for token
-    console.log(req.params);
     let token = ""
 
     const urlUsername = req.params.username;
@@ -102,7 +96,6 @@ const checkGuideAuthentication =  (req, res, next) => {
 
     // verifies secret and checks exp
       jwt.verify(token, config.JwtSecret, (err, decoded) => {
-       console.log(token );
         //check if this user is a guide
         if (err) return res.status(401).send({
             error: 'Unauthorized',
@@ -117,11 +110,9 @@ const checkGuideAuthentication =  (req, res, next) => {
             error: ' Wrong Guide',
             message: 'This Guide does not match this corresponding guides page.'
         });
-        
-        //console.log(req);
+
         // if everything is good, save to request for use in other routes
         req.userId = decoded.id;
-        console.log(decoded.role);
         next();
     });
 };

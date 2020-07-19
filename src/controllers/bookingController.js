@@ -3,15 +3,11 @@ const Booking = require('../models/Booking');
 const User = require('../models/User');
 
 const load  = async(req, res) => {
-    console.log('Tour ID:', req.params.id);
     const tour = await Tour.findById(
         req.params.tour_id
     ).exec();
-    console.log(tour.dates_seats);
     res.json(tour);
-
 }
-
 
 const book  = async(req, res) => {
     tour = await Tour.findById(
@@ -22,8 +18,6 @@ const book  = async(req, res) => {
 
     if (req.body.desiredDateTimeID) {
      wish = req.body.desiredDateTimeID; //TODO get wishtime from one of the dates_seats in frontend
-     console.log("Request desiredDateTimeID From Frontend ");
-     console.log(wish);
     }
     else {console.log("Test mode: Please give a request of desiredDateTimeID. Using the first dates_seats for testing");
         wish = tour.dates_seats[0]
@@ -45,7 +39,6 @@ const book  = async(req, res) => {
             {
                 dates_seats_updated.push({"date" : date_seats.date,"seats": rest_seats})}
         }
-        console.log(dates_seats_updated);
         await Booking.create(new_booking)
         .then(booking => res.status(201).json(booking))
         .catch(error => res.status(500).json({
@@ -88,16 +81,11 @@ const usersTour  = async(req, res) => {
       }
       // allTours.push(tours);
   };
-  //console.log('allTours: ', allTours);
-  //console.log('allCategories: ', allCategories);
-
   // sending all categories that coming from previous bookings of the user.
   res.json(allCategories);
 };
 
-
 module.exports = {
-
     load,
     book,
     usersTour

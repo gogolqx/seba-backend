@@ -13,5 +13,3 @@ router.post('/register_traveler', AuthController.register_traveler);
 router.get('/logout', middlewares.checkAuthentication, AuthController.logout);
 
 module.exports = router;
-
-//router.get('/me', middlewares.checkAuthentication , AuthController.me);

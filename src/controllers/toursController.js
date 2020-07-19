@@ -16,7 +16,6 @@ const geoCoder = nodeGeocoder(options);
 
 // creating tour
 const create = async (req, res) => {
-    console.log("your are creating a tour");
     if (Object.keys(req.body).length === 0) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body is empty'
@@ -133,7 +132,6 @@ const search = async(req, res) => {
 // listing all tours
 //TODO: 
 const list  = async(req, res) => {
-    console.log('I am here getting tour');
     try{
         const tours = await Tour.find();
         res.json(tours);
@@ -173,12 +171,9 @@ const update = (req, res) => {
         }));
 };
 const guidesTours  = async(req, res) => {
-    console.log(req.body);
-    
     const user = await User.findOne(
         {username : req.params.username}
     ).select().exec();
-    console.log('user: ', user);
   
     if (user.role === "traveler") return res.status(404).json({
         error: 'Not Found',
@@ -187,8 +182,7 @@ const guidesTours  = async(req, res) => {
     const tours = await Tour.find(
       {guide_id:user._id}
     ).exec();
-  
-    console.log('tours: ', tours);
+
     res.json(tours);
   };
 module.exports = {

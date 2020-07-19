@@ -26,7 +26,6 @@ const check_register_property  = function(req,res){
 
 
 const login = async(req,res) => {
-    console.log(req);
     if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body must contain a password property'
@@ -51,7 +50,6 @@ const login = async(req,res) => {
             const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
-            console.log("token is given")
             res.status(200).json({token: token});
         })
         .catch(error => res.status(404).json({
@@ -64,7 +62,6 @@ const login = async(req,res) => {
 
 const register_guide = async (req,res) => {
     const user = check_register_property(req,res);
-    console.log("you are registering as a guide")
     user.role = "guide";
     var guide = null;
     await User.create(user)
@@ -102,7 +99,6 @@ const register_guide = async (req,res) => {
 }
 
 const register_traveler = async(req,res) => {
-    console.log("register a traveler...");
     const user = check_register_property(req,res);
     var traveler = null;
     user.role = "traveler";
@@ -114,7 +110,6 @@ const register_traveler = async(req,res) => {
                 email: user.email
             }
             Traveler.create(traveler);
-            console.log(traveler);
             // if user is registered without errors, create a token
             const token = jwt.sign({ id: user._id,  username: user.username, role: user.role  }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours

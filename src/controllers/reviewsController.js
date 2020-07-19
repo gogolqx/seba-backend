@@ -20,8 +20,6 @@ const create = async (req, res) => {
     created_review = await Review.create(new_review,async (err,review)=>{
         if (err) {};
         updated_reviews.push(review._id);
-        console.log('old avg rating:');
-        console.log(tour.avg_rating );
         const updated_avg_rating = (tour.avg_rating * num_old_reviews + req.body.rating)/(num_old_reviews+1);
         //waiting updated_avg_rating is defined
         await Tour.findByIdAndUpdate(
