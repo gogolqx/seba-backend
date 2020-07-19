@@ -1,13 +1,11 @@
 const Tour = require('../models/Tour');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
-
 nodeGeocoder = require('node-geocoder');
 
 const options = {
     provider: 'openstreetmap'
   };
-
 
 var add_schedule =  function (dt, hours,mins) {
     return new Date(dt.getTime() + hours*60*60*1000+mins*60*1000);
@@ -67,9 +65,6 @@ const create = async (req, res) => {
             message: error.message
         }));
 };
-//
-
-
 
 // searching for tours on conditions
 const search = async(req, res) => {

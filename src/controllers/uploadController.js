@@ -17,7 +17,6 @@ const upload_from_mongdb = async (req, res) => {
   }
 };
 
-
 const uploadFile =(req, res) =>{ 
     let form = new multiparty.Form(); 
     var path = require('path'); 

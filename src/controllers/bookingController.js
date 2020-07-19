@@ -79,7 +79,6 @@ const usersTour  = async(req, res) => {
       for (let tour of tours) {
         allCategories.push(tour.preference);
       }
-      // allTours.push(tours);
   };
   // sending all categories that coming from previous bookings of the user.
   res.json(allCategories);
