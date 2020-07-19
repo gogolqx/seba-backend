@@ -13,11 +13,13 @@ const BlogSchema = new mongoose.Schema({
 
     blog_title: {
         type: String,
-        required: true
+        required: true,
+        maxlength: 30
     },
     blog_description: {
         type: String,
-        required: true
+        required: true,
+        minlength: 10
     },
     country:{
         type: { code: String, name: String },

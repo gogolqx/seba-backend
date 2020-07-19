@@ -55,7 +55,7 @@ const create = async (req, res) => {
     price: req.body.price,
     preference: req.body.preference,
     max_participants: req.body.max_participants,
-    img_url: req.body.image_url
+    image_url: req.body.image_url
     });
 
 
@@ -128,10 +128,20 @@ const search = async(req, res) => {
      }
 };
 
+const read  = async(req, res) => {
+    console.log('I am here reading a tour');
+    console.log(req.params)
+    try{
+        const tours = await Tour.findById(req.params.tour_id);
+        res.json(tours);
+    }catch(err){
+        res.json({message:err});
+    }
 
+};
 
 // listing all tours
-//TODO: 
+
 const list  = async(req, res) => {
     console.log('I am here getting tour');
     try{
@@ -194,7 +204,7 @@ const guidesTours  = async(req, res) => {
 module.exports = {
     create,
     search,
-    //  read,
+    read,
     update,
     remove,
     list,
