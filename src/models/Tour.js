@@ -8,7 +8,8 @@ const TourSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        required: true
+        required: true,
+        maxlength: 30
     },
     dates_seats:{
         type: [{
@@ -43,7 +44,8 @@ const TourSchema = new mongoose.Schema({
     lon:  {type:Number, required: true},
     description: {
         type: String,
-        required: true
+        required: true,
+        minlength: 10
     },
     max_participants: {
         type:Number,
@@ -79,6 +81,7 @@ const TourSchema = new mongoose.Schema({
     },
     likes:{
       type: Number,
+      min: 0,
       default: 0
     }
 });
