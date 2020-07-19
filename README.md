@@ -10,13 +10,13 @@
 > API is running in port 3000 (default) 
 ## Install and Configuration
 
-**node dependencies**
+### Add node dependencies
 
 ```
 npm install
 ```
 
-**Set up the configuration for database and cloudinary **
+### Set up the configuration for database and cloudinary
 
 In order to make a quicker delivery for submission, we already add  .env file. So you do not need set them manually.  
 But it is only for this special case.  
@@ -25,18 +25,10 @@ But it is only for this special case.
 * URI for mongodb-compass: mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/test
 * URI for node.js:  mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/<dbname>?retryWrites=true&w=majority
   
-substitute <dbname> to golocal-db
-and <password>
+substitute <dbname> to golocal-db and <password>.  
 --------------this is our mongodb database -------------------
   
 ## Start the project
-
-
-
-**Development environment**
-```bash
-npm run devstart
-```
 
 **Production environment**
 ```bash
