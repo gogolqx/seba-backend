@@ -30,7 +30,7 @@ const book  = async(req, res) => {
     }
 
     const rest_seats = wish.seats - req.body.num_participants;
-    if(rest_seats>0){
+    if(rest_seats > -1){
         let new_booking = new Booking ({
             tour_id: tour._id,
             traveller_id: req.userId,
@@ -39,12 +39,13 @@ const book  = async(req, res) => {
         })
         let dates_seats_updated = []
         for (date_seats of tour.dates_seats){
-            if (date_seats != wish)
+            if (date_seats._id != wish._id)
             {dates_seats_updated.push(date_seats);}
             else
-            {dates_seats_updated.push({"date" : date_seats.date,"seats": rest_seats})}
+            {
+                dates_seats_updated.push({"date" : date_seats.date,"seats": rest_seats})}
         }
-        //console.log(dates_seats_updated);
+        console.log(dates_seats_updated);
         await Booking.create(new_booking)
         .then(booking => res.status(201).json(booking))
         .catch(error => res.status(500).json({
@@ -52,7 +53,7 @@ const book  = async(req, res) => {
             message: error.message
         }));
         await Tour.findByIdAndUpdate(
-            req.params.id,{"dates_seats":dates_seats_updated},{
+            req.params.tour_id,{"dates_seats":dates_seats_updated},{
             new: true,
             runValidators: true})
             .exec();
