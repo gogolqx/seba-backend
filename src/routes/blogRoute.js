@@ -11,4 +11,5 @@ router.post('/:username/create', middlewares.checkGuideAuthentication,BlogContro
 router.get('/:username', BlogController.list); // List blogs from a guide
 router.get('/:username/:id', BlogController.read); // read one blog
 router.post('/:username/:id', middlewares.checkGuideAuthentication, BlogController.update); // read one blog
+router.delete('/:username/:id',  middlewares.checkGuideAuthentication, BlogController.remove); // Delete a tours by Id 
 module.exports = router;

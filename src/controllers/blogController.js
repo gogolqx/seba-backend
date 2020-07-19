@@ -71,6 +71,7 @@ const read  = async(req, res) => {
      //console.log('blogs: ', blogs.map(blog => blog.blog_title).sort());
 };
 const update = (req, res) => {
+    console.log("updating blogs")
     console.log(req.body)
     if (Object.keys(req.body).length === 0)
     {
@@ -91,7 +92,9 @@ const update = (req, res) => {
         }));
 };
 const remove = (req, res) => {
-    BlogModel.findByIdAndRemove(req.params.blog_id).exec()
+    console.log("remove blog");
+    console.log(req.params.id)
+    Blog.findByIdAndRemove(req.params.id).exec()
         .then(() => res.status(200).json({message: `Blog with id${req.params.blog_id} was deleted`}))
         .catch(error => res.status(500).json({
             error: 'Internal server error',

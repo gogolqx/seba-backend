@@ -19,7 +19,7 @@ const BlogSchema = new mongoose.Schema({
     blog_description: {
         type: String,
         required: true,
-        minlength: 10
+        minlength: 5
     },
     country:{
         type: { code: String, name: String },
