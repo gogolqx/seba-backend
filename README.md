@@ -26,15 +26,15 @@ npm install
 
 ### Set up the local configuration for JWT, database and cloudinary
 
-In order to make a quicker delivery for submission, we already add  .env file. So you do not need set them manually.  
-But it is only for this special case.  
+In order to make a quicker delivery for submission, we already added  **.env file.** So it means you do not need set them manually.  
+But it is only for this special case. If you do not see .env, please contact us.   
 
--------------this is our mongodb database --------------------
+-------------   *all our data is on this mongodb database (images on cloudinary)* --------------------  
 * URI for mongodb-compass: mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/test
-* URI for node.js:  mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/<dbname>?retryWrites=true&w=majority
-  
-substitute <dbname> to golocal-db and <password>.  
---------------this is our mongodb database -------------------
+* URI for node.js:  mongodb+srv://golocal:<password>@cluster0-dvenz.mongodb.net/<dbname>?retryWrites=true&w=majority. 
+* API for cloudinary : cloudinary://783531493977475:c-NDuFix-3kbMZ-FRScNeR53nx8@dcpcgxeug
+(substitute dbname to golocal-db and password.)    
+-----------------------------------------------------------------------------------------------------  
   
 ## Start the project
 
@@ -42,7 +42,11 @@ substitute <dbname> to golocal-db and <password>.
 ```bash
 npm start
 ```
-
+when you see this in the terminal, you are successfully connected.
+```bash
+Connected to DB!
+API is running in port 3000
+```
 ## API routes
 
 **authRoute: /auth**
