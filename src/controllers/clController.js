@@ -29,7 +29,6 @@ module.exports = {
           console.log(result);
           var post = new Image({
               title: result.original_filename,
-             
               // Store the URL in a DB for future use
               image_url: result.url,
               image_id: result.public_id
