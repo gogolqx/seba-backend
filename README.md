@@ -65,7 +65,7 @@ API is running in port 3000
 + router.post('/search', TourController.search);
 + router.get('/', TourController.list); // List all tours
 + router.post('/:username/create',  middlewares.checkGuideAuthentication,TourController.create); // Create a new tours   middlewares.checkAuthentication, 
-+ router.put('/:username/:tour_id',   middlewares.checkGuideAuthentication,TourController.update); // Update a tours by Id   middlewares.checkAuthentication,
++ router.put('/:username/:tour_id', TourController.update); // Update a tours by Id  
 + router.delete('/:username/:tour_id',  middlewares.checkGuideAuthentication, TourController.remove); // Delete a tours by Id    middlewares.checkAuthentication,
 
 
@@ -78,10 +78,12 @@ API is running in port 3000
 
 **blogRoute: /blog**
 + router.get('/', BlogController.list_all);
-+ router.post('/:username/create', middlewares.checkGuideAuthentication,BlogController.create); // create a blog
++ router.get('/:username/create', middlewares.checkGuideAuthentication);
++ router.post('/:username/create', middlewares.checkGuideAuthentication,BlogController.create); // create a blog with 
 + router.get('/:username', BlogController.list); // List blogs from a guide
 + router.get('/:username/:id', BlogController.read); // read one blog
 + router.post('/:username/:id', middlewares.checkGuideAuthentication, BlogController.update); // read one blog
++ router.delete('/:username/:id',  middlewares.checkGuideAuthentication, BlogController.remove); // Delete a tours by Id 
 
 **reviewsoute: /reviews**
 
