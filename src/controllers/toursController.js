@@ -166,6 +166,8 @@ const update = (req, res) => {
             message: 'The request body is empty'
         });
     };
+    console.log('updating tour')
+    console.log(req.body)
     Tour.findByIdAndUpdate(req.params.tour_id,req.body,{
         new: true,
         runValidators: true})
