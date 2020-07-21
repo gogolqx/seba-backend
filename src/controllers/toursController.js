@@ -110,7 +110,7 @@ const search = async(req, res) => {
            'dates_seats.date':{$gte: query.pre,$lte:last_day} ,
            'dates_seats.seats':{$gte: query.num},
            preference:{$in:query.preference}
-        }).exec();
+        }).sort({'likes':-1}).exec();
         res.json(tours);
     }
     else{
@@ -119,7 +119,7 @@ const search = async(req, res) => {
             price:{$gte: query.price_min,  $lte: query.price_max},
             'dates_seats.date':{$gte: query.pre,$lte:last_day},
             'dates_seats.seats':{$gte: query.num},
-         }).exec();
+         }).sort({'likes':-1}).exec();
          res.json(tours);
      }
 };
@@ -140,7 +140,7 @@ const read  = async(req, res) => {
 
 const list  = async(req, res) => {
     try{
-        const tours = await Tour.find();
+        const tours = await Tour.find().sort({'likes':-1});
         res.json(tours);
     }catch(err){
         res.json({message:err});
